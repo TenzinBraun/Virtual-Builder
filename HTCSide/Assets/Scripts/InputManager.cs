@@ -20,11 +20,6 @@ public class InputManager : MonoBehaviour {
         CanClick = true;
     }
 
-    void Update()
-    {
-
-    }
-
     public bool CanClick
     {
         set
@@ -48,16 +43,17 @@ public class InputManager : MonoBehaviour {
 
     public bool IsRightTriggerClicked()
     {
-        return CanClick && (Input.GetAxis(CLICKED_RIGHT_TRIGGER_NAME) == 1);
+        return CanClick && (Input.GetAxis(CLICKED_RIGHT_TRIGGER_NAME) == 1 || Input.GetButton("LeftClick"));
     }
 
     public bool IsLeftTriggerClicked()
     {
-        return CanClick && (Input.GetAxis(CLICKED_LEFT_TRIGGER_NAME) == 1 || Input.GetButton(CLICKED_LEFT_TRIGGER_NAME));
+        return CanClick && (Input.GetAxis(CLICKED_LEFT_TRIGGER_NAME) == 1 || Input.GetButton("LeftClick"));
     }
 
     public bool UserClick()
     {
+        Debug.Log("UserClick");
         return (IsLeftTriggerClicked() || IsRightTriggerClicked()) && rayCast.Hit();
     }
 }
