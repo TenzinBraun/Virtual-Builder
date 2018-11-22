@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Grab
   - MenuContainer
+  - Floor
   layers:
   - Default
   - TransparentFX
