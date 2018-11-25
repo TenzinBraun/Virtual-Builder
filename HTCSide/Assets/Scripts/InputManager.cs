@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,8 @@ public class InputManager : MonoBehaviour {
         rayCast = GameObject.Find("PointerController").GetComponent<RayCast>();
         CanClick = true;
     }
+
+    
 
     public bool CanClick
     {
@@ -49,6 +52,11 @@ public class InputManager : MonoBehaviour {
     public bool IsLeftTriggerClicked()
     {
         return CanClick && (Input.GetAxis(CLICKED_LEFT_TRIGGER_NAME) == 1 || Input.GetButton("LeftClick"));
+    }
+
+    internal bool isGrabClicked()
+    {
+        throw new NotImplementedException();
     }
 
     public bool UserClick()
