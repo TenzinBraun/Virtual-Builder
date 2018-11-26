@@ -20,7 +20,7 @@ public class RayCast : MonoBehaviour {
     }
     public bool HitFurniture()
     {
-        return hit.transform.tag == "Furniture";
+        return hit.transform.tag == "Grabble";
     }
 
     public bool HitMenu()
