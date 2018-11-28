@@ -5,15 +5,19 @@ using UnityEngine;
 
 public class ControllerManager : MonoBehaviour {
 
-    ControllerManager secondController;
-    InputManager inputManager;
+    private ControllerManager secondController;
+    private InputManager inputManager;
 
+    enum Tools {TELEPORTER,PROPULSER,HAND,TRASH,CATALOG};
     string currentTool;
     bool choosingTool = false;
 
 	// Use this for initialization
 	void Start () {
         getSecondController();
+
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+
         setDefaultCurrentTool();
 		
 	}
@@ -41,16 +45,40 @@ public class ControllerManager : MonoBehaviour {
 
     private void getSecondController()
     {
-        throw new NotImplementedException();
+        if (name.Equals("RightController"))
+        {
+            secondController = GameObject.Find("LeftController").GetComponent<ControllerManager>();
+        } 
+        else if (name.Equals("LeftController"))
+        {
+            secondController = GameObject.Find("RightController").GetComponent<ControllerManager>();
+        }
     }
+
     private void setDefaultCurrentTool()
     {
-        throw new NotImplementedException();
+        if (name.Equals("RightController"))
+        {
+            setCurrentTool(Tools.HAND);
+        }
+        else if (name.Equals("LeftController"))
+        {
+            setCurrentTool(Tools.TELEPORTER);
+        }
     }
+
     private void displayMenu()
     {
         throw new NotImplementedException();
     }
+
+    private GameObject getToolIcon(Tools tool)
+    {
+        //RECUPERER ASSETS DANS DOSSIER UNITY
+
+        return null;
+    }
+
     private void hideMenu()
     {
         throw new NotImplementedException();
