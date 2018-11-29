@@ -61,7 +61,6 @@ public class InputManager : MonoBehaviour {
 
     public bool UserClick()
     {
-        Debug.Log("UserClick");
         return (IsLeftTriggerClicked() || IsRightTriggerClicked()) && rayCast.Hit();
     }
 }

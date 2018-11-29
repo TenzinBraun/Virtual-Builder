@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23739400008619730}
   - component: {fileID: 135220304451331930}
   m_Layer: 0
-  m_Name: Sphere 2
+  m_Name: PropulserIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

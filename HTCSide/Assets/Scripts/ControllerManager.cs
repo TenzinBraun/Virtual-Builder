@@ -8,23 +8,29 @@ public class ControllerManager : MonoBehaviour {
     private ControllerManager secondController;
     private InputManager inputManager;
 
-    enum Tools {TELEPORTER,PROPULSER,HAND,TRASH,CATALOG};
-    string currentTool;
+    Tools tools;
+    string currentTool; 
     bool choosingTool = false;
 
 	// Use this for initialization
 	void Start () {
-        getSecondController();
+        //getSecondController();
 
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
 
-        setDefaultCurrentTool();
-		
-	}
+        tools = new Tools();
+        Enum enumTools=tools.
+
+        //setDefaultCurrentTool();
+
+        initDisplayMenu();
+
+    }
+
 
     // Update is called once per frame
     void Update () {
-        if (inputManager.isGrabClicked() && !choosingTool && !secondController.isChoosingTool())
+        /*if (inputManager.isGrabClicked() && !choosingTool && !secondController.isChoosingTool())
         {
             displayMenu();
             choosingTool = true;
@@ -38,7 +44,7 @@ public class ControllerManager : MonoBehaviour {
                 choosingTool = false;
             }
 
-        }
+        }*/
 	}
 
     
@@ -59,24 +65,37 @@ public class ControllerManager : MonoBehaviour {
     {
         if (name.Equals("RightController"))
         {
-            setCurrentTool(Tools.HAND);
+            setCurrentTool(Tool.HAND);
         }
         else if (name.Equals("LeftController"))
         {
-            setCurrentTool(Tools.TELEPORTER);
+            setCurrentTool(Tool.TELEPORTER);
         }
     }
+
+    private void initDisplayMenu()
+    {
+        hideMenuAssets();
+        
+    }
+
+    private void hideMenuAssets()
+    {
+        for (int i = 0; i < numberOfTool(); i++)
+        {
+            hideToolAsset((Tool)i);
+        }
+    }
+
+    
+
+
+
+
 
     private void displayMenu()
     {
         throw new NotImplementedException();
-    }
-
-    private GameObject getToolIcon(Tools tool)
-    {
-        //RECUPERER ASSETS DANS DOSSIER UNITY
-
-        return null;
     }
 
     private void hideMenu()
