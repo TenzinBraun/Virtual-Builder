@@ -3,41 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControllerManager : MonoBehaviour {
 
-    private ControllerManager secondController;
+public partial class ControllerManager : MonoBehaviour {
+    //Partial class -> Tool declaration & methods in Tools.cs
+    
     private InputManager inputManager;
+    private ControllerManager secondController;
 
-    Tools tools;
     string currentTool; 
     bool choosingTool = false;
+    bool vrMode;
 
 	// Use this for initialization
 	void Start () {
-        //getSecondController();
-
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
 
-        tools = new Tools();
-        Enum enumTools=tools.
-
+        //getSecondController();
         //setDefaultCurrentTool();
-
-        initDisplayMenu();
+        hideMenuAssets();
 
     }
 
 
     // Update is called once per frame
     void Update () {
-        /*if (inputManager.isGrabClicked() && !choosingTool && !secondController.isChoosingTool())
+        if (Grab())
         {
             displayMenu();
             choosingTool = true;
         }
-        if (!inputManager.isGrabClicked() && choosingTool)
+       /* if (!inputManager.UserGrab() && choosingTool)
         {
-            hideMenu();
+            hideMenuAssets();
             if (getSelectedTool() != null)
             {
                 setCurrentTool(getSelectedTool());
@@ -47,6 +44,7 @@ public class ControllerManager : MonoBehaviour {
         }*/
 	}
 
+    
     
 
     private void getSecondController()
@@ -73,12 +71,6 @@ public class ControllerManager : MonoBehaviour {
         }
     }
 
-    private void initDisplayMenu()
-    {
-        hideMenuAssets();
-        
-    }
-
     private void hideMenuAssets()
     {
         for (int i = 0; i < numberOfTool(); i++)
@@ -86,22 +78,37 @@ public class ControllerManager : MonoBehaviour {
             hideToolAsset((Tool)i);
         }
     }
+    private void showMenuAssets()
+    {
+        for (int i = 0; i < numberOfTool(); i++)
+        {
+            showToolAsset((Tool)i);
+        }
+    }
 
-    
-
-
-
-
+    private bool Grab()
+    {
+        if(secondController!=null)
+            return inputManager.UserGrip() && !choosingTool &&!secondController.isChoosingTool();
+        else
+            return inputManager.UserGrip() && !choosingTool;
+    }
 
     private void displayMenu()
     {
-        throw new NotImplementedException();
+        showMenuAssets();
+        initMenuAssetsPosition();
     }
 
-    private void hideMenu()
+    private void initMenuAssetsPosition()
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < numberOfTool(); i++)
+        {
+            Debug.Log((Tool)i);
+            moveToolAsset(((Tool)i), 0, 0, i);
+        }
     }
+
     private object getSelectedTool()
     {
         throw new NotImplementedException();

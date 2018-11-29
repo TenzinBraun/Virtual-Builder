@@ -8,17 +8,21 @@ public class InputManager : MonoBehaviour {
 
     private static readonly string CLICKED_LEFT_TRIGGER_NAME = "TriggerLeft";
     private static readonly string CLICKED_RIGHT_TRIGGER_NAME = "TriggerRight";
+    private static readonly string CLICKED_LEFT_GRIP_NAME = "GripLeft";
+    private static readonly string CLICKED_RIGHT_GRIP_NAME = "GripRight";
 
     private RayCast rayCast;
 
 
     private bool canClick;
+    private bool canGrip;
     private static readonly float CLICK_COOLDOWN_IN_SECOND = 0.2f;
 
     void Start()
     {
         rayCast = GameObject.Find("PointerController").GetComponent<RayCast>();
-        CanClick = true;
+        canClick = true;
+        canGrip = true;
     }
 
     
@@ -54,9 +58,29 @@ public class InputManager : MonoBehaviour {
         return CanClick && (Input.GetAxis(CLICKED_LEFT_TRIGGER_NAME) == 1 || Input.GetButton("LeftClick"));
     }
 
-    internal bool isGrabClicked()
+    public bool IsRightGripClicked()
     {
-        throw new NotImplementedException();
+        return canGrip && (Input.GetAxis(CLICKED_RIGHT_GRIP_NAME) == 1 );
+
+    }
+
+    public bool IsLeftGripClicked()
+    {
+        return canGrip && (Input.GetAxis(CLICKED_LEFT_GRIP_NAME) == 1);
+    }
+
+    internal bool UserGrip()
+    {
+        if (IsLeftGripClicked() || IsRightGripClicked() || Input.GetKeyDown(KeyCode.G))
+        {
+                canGrip = false;
+                return true;   
+        }
+        else
+        {
+            canGrip = true;
+            return false;
+        }
     }
 
     public bool UserClick()

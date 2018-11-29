@@ -3,35 +3,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tools {
+public partial class ControllerManager {
 
-    public enum enumTools { TELEPORTER = 0, PROPULSER = 1, HAND = 2, TRASH = 3, CATALOG = 4 };
+    public enum Tool { TELEPORTER = 0, PROPULSER = 1, HAND = 2, TRASH = 3, CATALOG = 4 };
 
-    public Tools()
+    private void hideToolAsset(Tool tool)
     {
-
-    }
-
-    private void hideToolAsset(Tools tool)
-    {
-        GameObject toolAsset = getToolIcon(tool);
-        toolAsset.transform.position = new Vector3(0, 1, 0);
+        GameObject toolAsset = getToolAsset(tool);
         toolAsset.SetActive(false);
     }
 
-    private GameObject getToolIcon(Tools tool)
+    private void showToolAsset(Tool tool)
+    {
+        GameObject toolAsset = getToolAsset(tool);
+        toolAsset.SetActive(true);
+    }
+
+    private void moveToolAsset(Tool tool, int xTransform, int yTransform, int zTransform)
+    {
+        GameObject toolAsset = getToolAsset(tool);
+        Debug.Log(toolAsset.name);
+        toolAsset.transform.position = new Vector3(xTransform, yTransform, zTransform);
+
+    }
+
+    private GameObject getToolAsset(Tool tool)
     {
         return GameObject.Find(getToolName(tool) + "Icon");
     }
 
     private int numberOfTool()
     {
-        return Enum.GetNames(typeof(Tools)).Length;
+        return Enum.GetNames(typeof(Tool)).Length;
     }
 
-    String getToolName(Tools tool)
+    String getToolName(Tool tool)
     {
-        return getCamelCase(Enum.GetName(typeof(Tools), tool));
+        return getCamelCase(Enum.GetName(typeof(Tool), tool));
     }
 
     private String getCamelCase(String toCamelCase)
@@ -41,7 +49,4 @@ public class Tools {
         return result;
 
     }
-
-
-
 }
