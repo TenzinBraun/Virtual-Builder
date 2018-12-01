@@ -18,11 +18,12 @@ public partial class ControllerManager : MonoBehaviour {
 	void Start () {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
 
-        //getSecondController();
-        //setDefaultCurrentTool();
-        initToolAssets();
-        hideMenuAssets();
+        getSecondController();
 
+        setDefaultCurrentTool();
+        initToolAssets();
+
+        hideMenuAssets();
     }
 
 
@@ -39,7 +40,7 @@ public partial class ControllerManager : MonoBehaviour {
             if (getSelectedTool() != -1)
             {
                 Debug.Log(getSelectedTool());
-                //setCurrentTool(getSelectedTool());
+                setCurrentTool(getSelectedTool());
             }
             choosingTool = false;
         }
@@ -109,7 +110,7 @@ public partial class ControllerManager : MonoBehaviour {
         }
     }
 
-    private int getSelectedTool()
+    private String getSelectedTool()
     {
         return inputManager.selectedTool();
     }

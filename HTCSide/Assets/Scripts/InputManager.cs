@@ -92,18 +92,8 @@ public class InputManager : MonoBehaviour {
         return (IsLeftTriggerClicked() || IsRightTriggerClicked()) && rayCast.Hit();
     }
 
-    internal int selectedTool()
+    internal String selectedTool()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-            return 0;
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            return 1;
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            return 2;
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            return 3;
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            return 4;
-        return -1;
+        return rayCast.GetHit().transform.name;
     }
 }
