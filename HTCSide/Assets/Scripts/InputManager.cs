@@ -71,7 +71,11 @@ public class InputManager : MonoBehaviour {
 
     internal bool UserGrip()
     {
-        if (IsLeftGripClicked() || IsRightGripClicked() || Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKey(KeyCode.G))
+        {
+            return true;
+        }
+        if (IsLeftGripClicked() || IsRightGripClicked())
         {
                 canGrip = false;
                 return true;   
@@ -86,5 +90,20 @@ public class InputManager : MonoBehaviour {
     public bool UserClick()
     {
         return (IsLeftTriggerClicked() || IsRightTriggerClicked()) && rayCast.Hit();
+    }
+
+    internal int selectedTool()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            return 0;
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            return 1;
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            return 2;
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            return 3;
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            return 4;
+        return -1;
     }
 }

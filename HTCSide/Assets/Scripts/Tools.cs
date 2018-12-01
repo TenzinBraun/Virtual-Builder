@@ -6,30 +6,39 @@ using UnityEngine;
 public partial class ControllerManager {
 
     public enum Tool { TELEPORTER = 0, PROPULSER = 1, HAND = 2, TRASH = 3, CATALOG = 4 };
+    public List<GameObject> ToolGameObjects;
 
-    private void hideToolAsset(Tool tool)
+    private void initToolAssets()
     {
-        GameObject toolAsset = getToolAsset(tool);
+        for (int i = 0; i < numberOfTool(); i++)
+        {
+            setToolAsset((Tool)i,i);
+        }
+
+    }
+
+    private void hideToolAsset(int tool)
+    {
+        GameObject toolAsset = ToolGameObjects[tool];
         toolAsset.SetActive(false);
     }
 
-    private void showToolAsset(Tool tool)
+    private void showToolAsset(int tool)
     {
-        GameObject toolAsset = getToolAsset(tool);
+        GameObject toolAsset = ToolGameObjects[tool];
         toolAsset.SetActive(true);
     }
 
-    private void moveToolAsset(Tool tool, int xTransform, int yTransform, int zTransform)
+    private void moveToolAsset(int tool, int xTransform, int yTransform, int zTransform)
     {
-        GameObject toolAsset = getToolAsset(tool);
-        Debug.Log(toolAsset.name);
+        GameObject toolAsset = ToolGameObjects[tool];
         toolAsset.transform.position = new Vector3(xTransform, yTransform, zTransform);
 
     }
 
-    private GameObject getToolAsset(Tool tool)
+    private void setToolAsset(Tool tool,int position)
     {
-        return GameObject.Find(getToolName(tool) + "Icon");
+        ToolGameObjects.Insert(position,GameObject.Find(getToolName(tool) + "Icon"));
     }
 
     private int numberOfTool()

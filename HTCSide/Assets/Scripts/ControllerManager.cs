@@ -20,6 +20,7 @@ public partial class ControllerManager : MonoBehaviour {
 
         //getSecondController();
         //setDefaultCurrentTool();
+        initToolAssets();
         hideMenuAssets();
 
     }
@@ -27,21 +28,21 @@ public partial class ControllerManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Grab())
+        if (Grab()&&!choosingTool)
         {
             displayMenu();
             choosingTool = true;
         }
-       /* if (!inputManager.UserGrab() && choosingTool)
+       if (!Grab() && choosingTool)
         {
             hideMenuAssets();
-            if (getSelectedTool() != null)
+            if (getSelectedTool() != -1)
             {
-                setCurrentTool(getSelectedTool());
-                choosingTool = false;
+                Debug.Log(getSelectedTool());
+                //setCurrentTool(getSelectedTool());
             }
-
-        }*/
+            choosingTool = false;
+        }
 	}
 
     
@@ -75,23 +76,23 @@ public partial class ControllerManager : MonoBehaviour {
     {
         for (int i = 0; i < numberOfTool(); i++)
         {
-            hideToolAsset((Tool)i);
+            hideToolAsset(i);
         }
     }
     private void showMenuAssets()
     {
         for (int i = 0; i < numberOfTool(); i++)
         {
-            showToolAsset((Tool)i);
+            showToolAsset(i);
         }
     }
 
     private bool Grab()
     {
-        if(secondController!=null)
-            return inputManager.UserGrip() && !choosingTool &&!secondController.isChoosingTool();
+        if (secondController != null)
+            return inputManager.UserGrip() && !choosingTool && !secondController.isChoosingTool();
         else
-            return inputManager.UserGrip() && !choosingTool;
+            return inputManager.UserGrip();
     }
 
     private void displayMenu()
@@ -104,14 +105,13 @@ public partial class ControllerManager : MonoBehaviour {
     {
         for (int i = 0; i < numberOfTool(); i++)
         {
-            Debug.Log((Tool)i);
-            moveToolAsset(((Tool)i), 0, 0, i);
+            moveToolAsset(i, 0, 0, i);
         }
     }
 
-    private object getSelectedTool()
+    private int getSelectedTool()
     {
-        throw new NotImplementedException();
+        return inputManager.selectedTool();
     }
     private bool isChoosingTool()
     {
