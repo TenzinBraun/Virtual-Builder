@@ -18,7 +18,7 @@ public partial class ControllerManager : MonoBehaviour {
 	void Start () {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
 
-        getSecondController();
+        setSecondController();
 
         setDefaultCurrentTool();
         initToolAssets();
@@ -29,61 +29,54 @@ public partial class ControllerManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Grab()&&!choosingTool)
-        {
+       if (Grab() && !choosingTool)
             displayMenu();
-            choosingTool = true;
-        }
+
        if (!Grab() && choosingTool)
         {
-            hideMenuAssets();
-            if (getSelectedTool() != -1)
-            {
-                setCurrentTool(getSelectedTool());
-                Debug.Log(currentTool);
-            }
-            choosingTool = false;
-        }
-	}
+            hideMenu();
 
-    private void getSecondController()
+            if (getSelectedTool() != -1)
+                setCurrentTool(getSelectedTool());
+        }
+
+       if(!choosingTool && currentTool!=null)
+            updateCurrentToolPosition(currentTool);
+    }
+
+    private void setSecondController()
     {
         if (name.Equals("RightController"))
-        {
             secondController = GameObject.Find("LeftController").GetComponent<ControllerManager>();
-        } 
         else if (name.Equals("LeftController"))
-        {
             secondController = GameObject.Find("RightController").GetComponent<ControllerManager>();
-        }
+
+        if (secondController == null)
+            vrMode = true;
+        else
+            vrMode = false;
     }
 
     private void setDefaultCurrentTool()
     {
         if (name.Equals("RightController"))
-        {
             setCurrentTool(Tool.HAND);
-        }
         else if (name.Equals("LeftController"))
-        {
             setCurrentTool(Tool.TELEPORTER);
-        }
+    }
+
+    private void hideMenu()
+    {
+        choosingTool = false;
+        hideMenuAssets();
     }
 
     private void hideMenuAssets()
     {
         for (int i = 0; i < numberOfTool(); i++)
-        {
             hideToolAsset(i);
-        }
     }
-    private void showMenuAssets()
-    {
-        for (int i = 0; i < numberOfTool(); i++)
-        {
-            showToolAsset(i);
-        }
-    }
+    
 
     private bool Grab()
     {
@@ -95,16 +88,21 @@ public partial class ControllerManager : MonoBehaviour {
 
     private void displayMenu()
     {
+        choosingTool = true;
         showMenuAssets();
         initMenuAssetsPosition();
+    }
+
+    private void showMenuAssets()
+    {
+        for (int i = 0; i < numberOfTool(); i++)
+            showToolAsset(i);
     }
 
     private void initMenuAssetsPosition()
     {
         for (int i = 0; i < numberOfTool(); i++)
-        {
             moveToolAsset(i, 0, 0, i);
-        }
     }
 
     private int getSelectedTool()
@@ -120,12 +118,23 @@ public partial class ControllerManager : MonoBehaviour {
     private void setCurrentTool(int toolIndex)
     {
         currentTool = getToolName((Tool)toolIndex);
+        showCurrentTool();
     }
 
     private void setCurrentTool(Tool Tool)
     {
         currentTool = getToolName(Tool);
+        showCurrentTool();
     }
-    
 
+    private void showCurrentTool()
+    {
+        if (vrMode)
+        {
+            updateCurrentToolPosition(currentTool);
+        } else
+        {
+
+        }
+    }
 }
