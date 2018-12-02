@@ -9,6 +9,7 @@ public partial class ControllerManager : MonoBehaviour {
     
     private InputManager inputManager;
     private ControllerManager secondController;
+    private RayCast rayCast;
 
     String currentTool; 
     bool choosingTool = false;
@@ -17,8 +18,8 @@ public partial class ControllerManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
-
         setSecondController();
+        rayCast= GameObject.Find("PointerController").GetComponent<RayCast>();
 
         setDefaultCurrentTool();
         initToolAssets();
@@ -90,8 +91,11 @@ public partial class ControllerManager : MonoBehaviour {
     {
         choosingTool = true;
         showMenuAssets();
+        initMenuPostition();
         initMenuAssetsPosition();
     }
+
+   
 
     private void showMenuAssets()
     {
@@ -99,11 +103,19 @@ public partial class ControllerManager : MonoBehaviour {
             showToolAsset(i);
     }
 
+    private void initMenuPostition()
+    {
+        GameObject.Find("Menu").transform.rotation = GameObject.Find("FirstPersonCharacter").transform.rotation ;
+        GameObject.Find("Menu").transform.position = rayCast.GetHit().point;
+    }
+
     private void initMenuAssetsPosition()
     {
         for (int i = 0; i < numberOfTool(); i++)
-            moveToolAsset(i, 0, 0, i);
+            moveToolAsset(i, 0f, 0f, i-2.5f);
     }
+
+    
 
     private int getSelectedTool()
     {

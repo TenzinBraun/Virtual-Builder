@@ -24,14 +24,17 @@ public partial class ControllerManager {
 
     private void showToolAsset(int tool)
     {
+
         GameObject toolAsset = toolGameObjects[tool];
+
+        toolAsset.transform.localScale = new Vector3(1f, 1f, 1f);
         toolAsset.SetActive(true);
     }
 
-    private void moveToolAsset(int tool, int xTransform, int yTransform, int zTransform)
+    private void moveToolAsset(int tool, float xTransform, float yTransform, float zTransform)
     {
         GameObject toolAsset = toolGameObjects[tool];
-        toolAsset.transform.position = new Vector3(xTransform, yTransform, zTransform);
+        toolAsset.transform.position = GameObject.Find("Menu").transform.position+ new Vector3(xTransform, yTransform, zTransform);
 
     }
 
@@ -78,8 +81,8 @@ public partial class ControllerManager {
     public void updateCurrentToolPosition(String tool)
     {
         getToolAsset(tool).SetActive(true);
-        
-        getToolAsset(tool).transform.position = Camera.current.ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 2.0f)); ;
+        getToolAsset(tool).transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        getToolAsset(tool).transform.position = Camera.current.ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 2.0f));
     }
 
     private GameObject getToolAsset(String tool)
