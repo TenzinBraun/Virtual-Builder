@@ -38,7 +38,7 @@ public partial class ControllerManager {
 
     private void setToolAsset(Tool tool,int position)
     {
-        ToolGameObjects.Insert(position,GameObject.Find(getToolName(tool) + "Icon"));
+        ToolGameObjects.Insert(position,GameObject.Find(getToolAssetName(tool) + "Icon"));
     }
 
     private int numberOfTool()
@@ -46,7 +46,7 @@ public partial class ControllerManager {
         return Enum.GetNames(typeof(Tool)).Length;
     }
 
-    String getToolName(Tool tool)
+    String getToolAssetName(Tool tool)
     {
         return getCamelCase(Enum.GetName(typeof(Tool), tool));
     }
@@ -57,5 +57,22 @@ public partial class ControllerManager {
         result += toCamelCase.Substring(1, toCamelCase.Length - 1).ToLower();
         return result;
 
+    }
+
+    private int getToolAssetIndice(string ToolAssetName)
+    {
+        for(int i = 0; i < ToolGameObjects.Count; i++)
+        {
+            if (ToolGameObjects[i].name == ToolAssetName)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private String getToolName(Tool tool)
+    {
+        return (Enum.GetName(typeof(Tool), tool));
     }
 }

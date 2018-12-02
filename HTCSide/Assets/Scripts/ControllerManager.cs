@@ -10,7 +10,7 @@ public partial class ControllerManager : MonoBehaviour {
     private InputManager inputManager;
     private ControllerManager secondController;
 
-    string currentTool; 
+    String currentTool; 
     bool choosingTool = false;
     bool vrMode;
 
@@ -39,15 +39,12 @@ public partial class ControllerManager : MonoBehaviour {
             hideMenuAssets();
             if (getSelectedTool() != -1)
             {
-                Debug.Log(getSelectedTool());
                 setCurrentTool(getSelectedTool());
+                Debug.Log(currentTool);
             }
             choosingTool = false;
         }
 	}
-
-    
-    
 
     private void getSecondController()
     {
@@ -110,20 +107,25 @@ public partial class ControllerManager : MonoBehaviour {
         }
     }
 
-    private String getSelectedTool()
+    private int getSelectedTool()
     {
-        return inputManager.selectedTool();
+        return getToolAssetIndice(inputManager.selectedTool());
     }
+
     private bool isChoosingTool()
     {
-        throw new NotImplementedException();
+        return choosingTool;
     }
 
-    private void setCurrentTool(object v)
+    private void setCurrentTool(int toolIndex)
     {
-        throw new NotImplementedException();
+        currentTool = getToolName((Tool)toolIndex);
     }
 
+    private void setCurrentTool(Tool Tool)
+    {
+        currentTool = getToolName(Tool);
+    }
     
 
 }
