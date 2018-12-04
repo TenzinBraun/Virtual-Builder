@@ -11,7 +11,7 @@ public partial class ControllerManager : MonoBehaviour {
     private ControllerManager secondController;
     private RayCast rayCast;
 
-    String currentTool; 
+    string currentTool; 
     bool choosingTool = false;
     bool vrMode;
 
