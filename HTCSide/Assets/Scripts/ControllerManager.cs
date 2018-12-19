@@ -91,8 +91,8 @@ public partial class ControllerManager : MonoBehaviour {
     {
         choosingTool = true;
         showMenuAssets();
-        initMenuPostition();
         initMenuAssetsPosition();
+        initMenuPostition();
     }
 
    
@@ -105,8 +105,9 @@ public partial class ControllerManager : MonoBehaviour {
 
     private void initMenuPostition()
     {
-        GameObject.Find("Menu").transform.rotation = GameObject.Find("FirstPersonCharacter").transform.rotation ;
         GameObject.Find("Menu").transform.position = rayCast.GetHit().point;
+       
+        GameObject.Find("Menu").transform.Rotate(new Vector3(0,rayCast.GetSource().transform.rotation.eulerAngles.y+90,0),Space.World);
     }
 
     private void initMenuAssetsPosition()

@@ -31,5 +31,10 @@ public class RayCast : MonoBehaviour {
     public RaycastHit GetHit()
     {
         return hit;
-    } 
+    }
+
+    public GameObject GetSource()
+    {
+        return source;
+    }
 }
