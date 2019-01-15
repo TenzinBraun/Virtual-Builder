@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -555,6 +555,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 23234899150750488, guid: e41631de8766c4544ba813bf134fd874,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d6b9c71749b86ef49aba588d228de409, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e41631de8766c4544ba813bf134fd874, type: 2}
   m_IsPrefabAsset: 0
@@ -835,6 +840,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 23418137290998776, guid: ac61b4e7db30ddb409099c400046ec21,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d15824f7bb7a1c44082e1b30e09b796b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac61b4e7db30ddb409099c400046ec21, type: 2}
   m_IsPrefabAsset: 0
@@ -882,6 +892,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 23704092271767934, guid: d94423cbea466f549960e80f067931a0,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 285f732a8d3cfeb4e98b345b45b217c7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d94423cbea466f549960e80f067931a0, type: 2}
   m_IsPrefabAsset: 0
@@ -992,6 +1007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb7a396c977562f45b2b0a0d8ec154ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toolGameObjects: []
 --- !u!1 &1543908703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,6 +1133,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 23739400008619730, guid: f5f868ef50c2b9345a57970c3e3d185a,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5e2d1f19ab25cff439117458889a5c47, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5f868ef50c2b9345a57970c3e3d185a, type: 2}
   m_IsPrefabAsset: 0
@@ -1234,6 +1255,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23538553512094444, guid: bfa205ff4dc0a7b4ca4fa2d28a76c25c,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 33b4b969835482149a2faca976cb9c6e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfa205ff4dc0a7b4ca4fa2d28a76c25c, type: 2}
   m_IsPrefabAsset: 0
