@@ -16,11 +16,11 @@ public class InputManager : MonoBehaviour {
 
     private bool canClick;
     private bool canGrip;
-    private static readonly float CLICK_COOLDOWN_IN_SECOND = 0.2f;
+    private static readonly float CLICK_COOLDOWN_IN_SECOND = 0.5f;
 
     void Start()
     {
-        rayCast = GameObject.Find("PointerController").GetComponent<RayCast>();
+        rayCast = GameObject.Find("LeftController").GetComponent<RayCast>();
         canClick = true;
         canGrip = true;
     }
@@ -50,7 +50,7 @@ public class InputManager : MonoBehaviour {
 
     public bool IsRightTriggerClicked()
     {
-        return CanClick && (Input.GetAxis(CLICKED_RIGHT_TRIGGER_NAME) == 1 || Input.GetButton("LeftClick"));
+        return /*CanClick && */(Input.GetAxis(CLICKED_RIGHT_TRIGGER_NAME) == 1 || Input.GetButton("RightClick"));
     }
 
     public bool IsLeftTriggerClicked()
