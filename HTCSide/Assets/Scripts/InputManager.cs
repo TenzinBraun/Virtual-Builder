@@ -92,8 +92,14 @@ public class InputManager : MonoBehaviour {
         return (IsLeftTriggerClicked() || IsRightTriggerClicked()) && rayCast.Hit();
     }
 
-    internal String selectedTool()
+    internal String selectedTool(bool vrMode)
     {
-        return rayCast.GetHit().transform.name;
+        if (vrMode)
+        {
+            return null;
+        } else
+        {
+            return rayCast.GetHit().transform.name;
+        }
     }
 }

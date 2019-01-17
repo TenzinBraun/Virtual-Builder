@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class ControllerManager {
 
-    public enum Tool { TELEPORTER = 0, PROPULSER = 1, HAND = 2, TRASH = 3, CATALOG = 4 };
+    private enum Tool { TELEPORTER = 0, PROPULSER = 1, HAND = 2, TRASH = 3, CATALOG = 4 };
     public List<GameObject> toolGameObjects;
 
     private void initToolAssets()
@@ -34,17 +34,19 @@ public partial class ControllerManager {
     private void moveToolAsset(int tool, float xTransform, float yTransform, float zTransform)
     {
         GameObject toolAsset = toolGameObjects[tool];
-        toolAsset.transform.position = GameObject.Find("Menu").transform.position+ new Vector3(xTransform, yTransform, zTransform);
+        toolAsset.transform.position = menu.transform.position+ new Vector3(xTransform, yTransform, zTransform);
 
     }
 
     private void setToolAsset(Tool tool,int position)
     {
-        toolGameObjects.Insert(position,GameObject.Find(getToolAssetName(tool)));
+        Debug.Log("setToolAsset");
+        toolGameObjects.Insert(position,menu.transform.GetChild(position).gameObject);
     }
 
     private int numberOfTool()
     {
+        Debug.Log("NbTools : " + Enum.GetNames(typeof(Tool)).Length);
         return Enum.GetNames(typeof(Tool)).Length;
     }
 
@@ -80,9 +82,15 @@ public partial class ControllerManager {
 
     public void updateCurrentToolPosition(String tool)
     {
-        getToolAsset(tool).SetActive(true);
-        getToolAsset(tool).transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-        getToolAsset(tool).transform.position = Camera.current.ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 2.0f));
+        if (vrMode)
+        {
+        }
+        else
+        {
+            getToolAsset(tool).SetActive(true);
+            getToolAsset(tool).transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            getToolAsset(tool).transform.position = Camera.current.ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 2.0f));
+        }
     }
 
     private GameObject getToolAsset(String tool)

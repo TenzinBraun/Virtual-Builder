@@ -11,6 +11,8 @@ public partial class ControllerManager : MonoBehaviour {
     private ControllerManager secondController;
     private RayCast rayCast;
 
+    private GameObject menu;
+
     string currentTool; 
     bool choosingTool = false;
     bool vrMode;
@@ -19,21 +21,29 @@ public partial class ControllerManager : MonoBehaviour {
 	void Start () {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
         setSecondController();
-        rayCast= GameObject.Find("PointerController").GetComponent<RayCast>();
+        rayCast = GameObject.Find(name).GetComponent<RayCast>();
+        
+        getControllerMenu();
+
+        initToolAssets();
+        initMenuAssetsPosition();
 
         setDefaultCurrentTool();
-        initToolAssets();
-
+        
         hideMenuAssets();
     }
-
+    
 
     // Update is called once per frame
     void Update () {
-       if (Grab() && !choosingTool)
+        if (Grab() && !choosingTool && !secondController.isChoosingTool())
+        {
             displayMenu();
+            choosingTool = true;
+        }
+            
 
-       if (!Grab() && choosingTool)
+        if (!Grab() && choosingTool)
         {
             hideMenu();
 
@@ -52,10 +62,24 @@ public partial class ControllerManager : MonoBehaviour {
         else if (name.Equals("LeftController"))
             secondController = GameObject.Find("RightController").GetComponent<ControllerManager>();
 
-        if (secondController == null)
+        if (secondController != null)
             vrMode = true;
         else
             vrMode = false;
+    }
+
+    private void getControllerMenu()
+    {
+        if (vrMode)
+        {
+            if (name.Equals("RightController"))
+                menu = GameObject.Find("RightMenu");
+            else if (name.Equals("LeftController"))
+                menu = GameObject.Find("LeftMenu");
+        } else
+        {
+            menu = GameObject.Find("Menu");
+        }
     }
 
     private void setDefaultCurrentTool()
@@ -81,18 +105,27 @@ public partial class ControllerManager : MonoBehaviour {
 
     private bool Grab()
     {
-        if (secondController != null)
-            return inputManager.UserGrip() && !choosingTool && !secondController.isChoosingTool();
+        if (vrMode)
+            return ControllerGrip();
         else
             return inputManager.UserGrip();
     }
 
+    private bool ControllerGrip()
+    {
+        if (name.Equals("RightController"))
+            return inputManager.IsRightGripClicked();
+        else if (name.Equals("LeftController"))
+            return inputManager.IsLeftGripClicked();
+
+        return false;
+    }
+
     private void displayMenu()
     {
-        choosingTool = true;
         showMenuAssets();
-        initMenuAssetsPosition();
         initMenuPostition();
+        
     }
 
    
@@ -105,10 +138,20 @@ public partial class ControllerManager : MonoBehaviour {
 
     private void initMenuPostition()
     {
-        GameObject.Find("Menu").transform.position = rayCast.GetHit().point;
-       
-        GameObject.Find("Menu").transform.Rotate(new Vector3(0,rayCast.GetSource().transform.rotation.eulerAngles.y+90,0),Space.World);
+
+        if (vrMode)
+        {
+            menu.transform.position = this.transform.position;
+            menu.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            menu.transform.Rotate(new Vector3(0, transform.rotation.eulerAngles.y + 90, 0), Space.Self);
+        } 
+        else     
+        {
+            menu.transform.position = rayCast.GetHit().point;
+            menu.transform.Rotate(new Vector3(0, rayCast.GetSource().transform.rotation.eulerAngles.y + 90, 0), Space.World);
+        }
     }
+        
 
     private void initMenuAssetsPosition()
     {
@@ -120,7 +163,7 @@ public partial class ControllerManager : MonoBehaviour {
 
     private int getSelectedTool()
     {
-        return getToolAssetIndice(inputManager.selectedTool());
+        return getToolAssetIndice(inputManager.selectedTool(vrMode));
     }
 
     private bool isChoosingTool()
