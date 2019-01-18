@@ -40,13 +40,11 @@ public partial class ControllerManager {
 
     private void setToolAsset(Tool tool,int position)
     {
-        Debug.Log("setToolAsset");
         toolGameObjects.Insert(position,menu.transform.GetChild(position).gameObject);
     }
 
     private int numberOfTool()
     {
-        Debug.Log("NbTools : " + Enum.GetNames(typeof(Tool)).Length);
         return Enum.GetNames(typeof(Tool)).Length;
     }
 
@@ -80,16 +78,31 @@ public partial class ControllerManager {
         return (Enum.GetName(typeof(Tool), tool));
     }
 
-    public void updateCurrentToolPosition(String tool)
+    private void initCurrentToolIcon()
     {
-        if (vrMode)
-        {
-        }
-        else
-        {
-            getToolAsset(tool).SetActive(true);
-            getToolAsset(tool).transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-            getToolAsset(tool).transform.position = Camera.current.ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 2.0f));
+        Destroy(currentToolIcon);
+        currentToolIcon = Instantiate(getToolAsset(currentTool));
+        currentToolIcon.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+        currentToolIcon.transform.parent = this.transform;
+        currentToolIcon.transform.position = this.transform.position;
+    }
+
+    private void destroyCurrentToolIcon()
+    {
+        Destroy(currentToolIcon);
+    }
+
+    public void updateCurrentToolPosition()
+    {
+        if (currentTool != null) {
+            if (vrMode)
+            {
+                
+            }
+            else
+            {
+                currentToolIcon.transform.position = Camera.current.ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 2.0f));
+            }
         }
     }
 

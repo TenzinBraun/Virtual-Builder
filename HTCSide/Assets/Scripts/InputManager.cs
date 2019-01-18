@@ -50,7 +50,7 @@ public class InputManager : MonoBehaviour {
 
     public bool IsRightTriggerClicked()
     {
-        return /*CanClick && */(Input.GetAxis(CLICKED_RIGHT_TRIGGER_NAME) == 1 || Input.GetButton("RightClick"));
+        return /*CanClick && */(Input.GetAxis(CLICKED_RIGHT_TRIGGER_NAME) == 1);
     }
 
     public bool IsLeftTriggerClicked()
@@ -92,10 +92,17 @@ public class InputManager : MonoBehaviour {
         return (IsLeftTriggerClicked() || IsRightTriggerClicked()) && rayCast.Hit();
     }
 
-    internal String selectedTool(bool vrMode)
+    internal String selectedTool(bool vrMode,String controllerName)
     {
         if (vrMode)
         {
+            GameObject controller = GameObject.Find(controllerName);
+            Collider[] colliders = Physics.OverlapSphere(controller.transform.position, 0.01f);
+            if (colliders.Length > 0)
+            {
+                if (colliders[0].transform.CompareTag("ToolIcon"))
+                    return colliders[0].transform.name;
+            }
             return null;
         } else
         {
