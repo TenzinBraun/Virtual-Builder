@@ -14,15 +14,14 @@ public class InputManager : MonoBehaviour {
     private RayCast rayCast;
 
 
-    private bool canClick;
-    private bool canGrip;
+    private bool canClick = true;
+    private bool canGrip = true;
     private static readonly float CLICK_COOLDOWN_IN_SECOND = 0.5f;
+    private GameObject player;
 
     void Start()
     {
         rayCast = GameObject.Find("LeftController").GetComponent<RayCast>();
-        canClick = true;
-        canGrip = true;
     }
 
     
@@ -32,14 +31,11 @@ public class InputManager : MonoBehaviour {
         set
         {
             if (!value) Invoke("EnableClick", CLICK_COOLDOWN_IN_SECOND);
-
             canClick = value;
-
         }
         get
         {
             return canClick;
-
         }
     }
 
@@ -50,7 +46,7 @@ public class InputManager : MonoBehaviour {
 
     public bool IsRightTriggerClicked()
     {
-        return /*CanClick && */(Input.GetAxis(CLICKED_RIGHT_TRIGGER_NAME) == 1);
+        return CanClick && (Input.GetAxis(CLICKED_RIGHT_TRIGGER_NAME) == 1);
     }
 
     public bool IsLeftTriggerClicked()
@@ -61,7 +57,6 @@ public class InputManager : MonoBehaviour {
     public bool IsRightGripClicked()
     {
         return canGrip && (Input.GetAxis(CLICKED_RIGHT_GRIP_NAME) == 1 );
-
     }
 
     public bool IsLeftGripClicked()
@@ -89,7 +84,7 @@ public class InputManager : MonoBehaviour {
 
     public bool UserClick()
     {
-        return (IsLeftTriggerClicked() || IsRightTriggerClicked()) && rayCast.Hit();
+        return (IsLeftTriggerClicked() || IsRightTriggerClicked());
     }
 
     internal String selectedTool(bool vrMode,String controllerName)

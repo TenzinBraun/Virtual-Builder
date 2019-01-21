@@ -20,12 +20,12 @@ public class RayCast : MonoBehaviour {
     }
     public bool HitFurniture()
     {
-        return hit.transform.tag == "Grabble";
+        return hit.transform.CompareTag("Grabbable");
     }
 
     public bool HitMenu()
     {
-        return hit.transform.tag == "MenuContainer";
+        return hit.transform.CompareTag("MenuContainer");
     }
 
     public RaycastHit GetHit()

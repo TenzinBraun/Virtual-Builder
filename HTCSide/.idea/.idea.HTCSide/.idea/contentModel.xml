@@ -12,10 +12,12 @@
           <e p="ControllerManager.cs" t="Include" />
           <e p="GrabHandler.cs" t="Include" />
           <e p="Input" t="Include">
-            <e p="LaserHandler.cs" t="Include" />
-            <e p="RayCast.cs" t="Include" />
+            <e p="InputManager.cs" t="Include" />
+            <e p="RayCast" t="Include">
+              <e p="LaserHandler.cs" t="Include" />
+              <e p="RayCast.cs" t="Include" />
+            </e>
           </e>
-          <e p="InputManager.cs" t="Include" />
           <e p="PlayerPosPointer.cs" t="Include" />
           <e p="TeleportationHandler.cs" t="Include" />
           <e p="Tools.cs" t="Include" />
