@@ -16,11 +16,11 @@ public class InputManager : MonoBehaviour {
 
     private bool canClick;
     private bool canGrip;
-    private static readonly float CLICK_COOLDOWN_IN_SECOND = 0.2f;
+    private static readonly float CLICK_COOLDOWN_IN_SECOND = 0.5f;
 
     void Start()
     {
-        rayCast = GameObject.Find("PointerController").GetComponent<RayCast>();
+        rayCast = GameObject.Find("LeftController").GetComponent<RayCast>();
         canClick = true;
         canGrip = true;
     }
@@ -50,7 +50,7 @@ public class InputManager : MonoBehaviour {
 
     public bool IsRightTriggerClicked()
     {
-        return CanClick && (Input.GetAxis(CLICKED_RIGHT_TRIGGER_NAME) == 1 || Input.GetButton("LeftClick"));
+        return /*CanClick && */(Input.GetAxis(CLICKED_RIGHT_TRIGGER_NAME) == 1);
     }
 
     public bool IsLeftTriggerClicked()
@@ -92,8 +92,21 @@ public class InputManager : MonoBehaviour {
         return (IsLeftTriggerClicked() || IsRightTriggerClicked()) && rayCast.Hit();
     }
 
-    internal String selectedTool()
+    internal String selectedTool(bool vrMode,String controllerName)
     {
-        return rayCast.GetHit().transform.name;
+        if (vrMode)
+        {
+            GameObject controller = GameObject.Find(controllerName);
+            Collider[] colliders = Physics.OverlapSphere(controller.transform.position, 0.01f);
+            if (colliders.Length > 0)
+            {
+                if (colliders[0].transform.CompareTag("ToolIcon"))
+                    return colliders[0].transform.name;
+            }
+            return null;
+        } else
+        {
+            return rayCast.GetHit().transform.name;
+        }
     }
 }

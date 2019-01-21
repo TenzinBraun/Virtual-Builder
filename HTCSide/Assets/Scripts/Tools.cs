@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class ControllerManager {
 
-    public enum Tool { TELEPORTER = 0, PROPULSER = 1, HAND = 2, TRASH = 3, CATALOG = 4 };
+    private enum Tool { TELEPORTER = 0, PROPULSER = 1, HAND = 2, TRASH = 3, CATALOG = 4 };
     public List<GameObject> toolGameObjects;
 
     private void initToolAssets()
@@ -34,13 +34,13 @@ public partial class ControllerManager {
     private void moveToolAsset(int tool, float xTransform, float yTransform, float zTransform)
     {
         GameObject toolAsset = toolGameObjects[tool];
-        toolAsset.transform.position = GameObject.Find("Menu").transform.position+ new Vector3(xTransform, yTransform, zTransform);
+        toolAsset.transform.position = menu.transform.position+ new Vector3(xTransform, yTransform, zTransform);
 
     }
 
     private void setToolAsset(Tool tool,int position)
     {
-        toolGameObjects.Insert(position,GameObject.Find(getToolAssetName(tool)));
+        toolGameObjects.Insert(position,menu.transform.GetChild(position).gameObject);
     }
 
     private int numberOfTool()
@@ -78,11 +78,32 @@ public partial class ControllerManager {
         return (Enum.GetName(typeof(Tool), tool));
     }
 
-    public void updateCurrentToolPosition(String tool)
+    private void initCurrentToolIcon()
     {
-        getToolAsset(tool).SetActive(true);
-        getToolAsset(tool).transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-        getToolAsset(tool).transform.position = Camera.current.ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 2.0f));
+        Destroy(currentToolIcon);
+        currentToolIcon = Instantiate(getToolAsset(currentTool));
+        currentToolIcon.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+        currentToolIcon.transform.parent = this.transform;
+        currentToolIcon.transform.position = this.transform.position;
+    }
+
+    private void destroyCurrentToolIcon()
+    {
+        Destroy(currentToolIcon);
+    }
+
+    public void updateCurrentToolPosition()
+    {
+        if (currentTool != null) {
+            if (vrMode)
+            {
+                
+            }
+            else
+            {
+                currentToolIcon.transform.position = Camera.current.ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 2.0f));
+            }
+        }
     }
 
     private GameObject getToolAsset(String tool)
