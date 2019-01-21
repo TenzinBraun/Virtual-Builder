@@ -9,6 +9,7 @@
       <e p="Assets" t="Include">
         <e p="FirstPersonController.cs" t="Include" />
         <e p="Scripts" t="Include">
+<<<<<<< HEAD
           <e p="GrabHandler.cs" t="Include" />
           <e p="Input" t="Include">
             <e p="InputManager.cs" t="Include" />
@@ -19,6 +20,17 @@
           </e>
           <e p="PlayerPosPointer.cs" t="Include" />
           <e p="TeleportationHandler.cs" t="Include" />
+=======
+          <e p="ControllerManager.cs" t="Include" />
+          <e p="Input" t="Include">
+            <e p="LaserHandler.cs" t="Include" />
+            <e p="RayCast.cs" t="Include" />
+          </e>
+          <e p="InputManager.cs" t="Include" />
+          <e p="PlayerPosPointer.cs" t="Include" />
+          <e p="TeleportationHandler.cs" t="Include" />
+          <e p="Tools.cs" t="Include" />
+>>>>>>> menu
         </e>
         <e p="Standard Asset" t="Include">
           <e p="Characters" t="Include">

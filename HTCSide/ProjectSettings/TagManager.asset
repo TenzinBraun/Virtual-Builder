@@ -7,7 +7,11 @@ TagManager:
   - Grab
   - MenuContainer
   - Floor
+<<<<<<< HEAD
   - Grabble
+=======
+  - ToolIcon
+>>>>>>> menu
   layers:
   - Default
   - TransparentFX
