@@ -82,9 +82,10 @@ public partial class ControllerManager {
     {
         Destroy(currentToolIcon);
         currentToolIcon = Instantiate(getToolAsset(currentTool));
+
         currentToolIcon.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
         currentToolIcon.transform.parent = this.transform;
-        currentToolIcon.transform.position = this.transform.position;
+        currentToolIcon.transform.position = this.transform.position + new Vector3(0f, 0.033f,0f) ;
     }
 
     private void destroyCurrentToolIcon()

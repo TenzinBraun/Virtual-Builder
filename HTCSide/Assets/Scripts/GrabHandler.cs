@@ -14,8 +14,9 @@ public class GrabHandler : MonoBehaviour
     private InputManager inputManager;
     public XRNode NodeType;
     public Vector3 ObjectGrabOffset;
-    public float GrabDistance = 0.1f;
+    public float GrabDistance = 0.001f;
     public string GrabTag = "Grab";
+    public string CatalogTag = "CatalogGrab";
     public float ThrowMultiplier = 1.5f;
 
     private Transform _currentObject;
@@ -44,7 +45,7 @@ public class GrabHandler : MonoBehaviour
                 if (inputManager.IsTriggerClicked() && colliders[0].transform.CompareTag(GrabTag))
                 {
                     //set current object to the object we have picked up
-                    _currentObject = colliders[0].transform;
+                        _currentObject = colliders[0].transform;
 
                     //if there is no rigidbody to the grabbed object attached, add one
                     if (_currentObject.GetComponent<Rigidbody>() == null)

@@ -192,7 +192,8 @@ public partial class ControllerManager : MonoBehaviour {
     {
         if (currentTool == getToolName(Tool.CATALOG))
         {
-
+            this.GetComponent<CatalogHandler>().enabled = false;
+            this.GetComponent<LaserHandler>().enabled = false;
         }
 
         if (currentTool == getToolName(Tool.HAND))
@@ -221,7 +222,10 @@ public partial class ControllerManager : MonoBehaviour {
     {
         if (currentTool == getToolName(Tool.CATALOG))
         {
-            
+            this.GetComponent<CatalogHandler>().enabled = true;
+            this.GetComponent<LaserHandler>().enabled = true;
+            this.GetComponent<CatalogHandler>().getCatalog().transform.position = this.transform.position + new Vector3(0, 5, 0);
+
         }
 
         if (currentTool == getToolName(Tool.HAND))

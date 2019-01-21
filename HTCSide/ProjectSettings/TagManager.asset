@@ -8,6 +8,7 @@ TagManager:
   - MenuContainer
   - Floor
   - ToolIcon
+  - CatalogGrab
   layers:
   - Default
   - TransparentFX

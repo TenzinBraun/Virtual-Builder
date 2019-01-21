@@ -11,7 +11,7 @@ public class TeleportationHandler : MonoBehaviour {
 
     void Start()
     {
-        rayCast = GameObject.Find("LeftController").GetComponent<RayCast>();
+        rayCast = this.GetComponent<RayCast>();
         inputManager = this.GetComponent<InputManager>();
         player = GameObject.Find("Player");
     }
