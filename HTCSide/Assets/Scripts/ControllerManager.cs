@@ -211,6 +211,7 @@ public partial class ControllerManager : MonoBehaviour {
         if (currentTool == getToolName(Tool.HAND))
         {
             this.GetComponent<GrabHandler>().enabled = false;
+            Debug.Log("Grab Handler Activated");
         }
 
         if (currentTool == getToolName(Tool.PROPULSER))

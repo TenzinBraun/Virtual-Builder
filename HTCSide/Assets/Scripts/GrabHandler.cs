@@ -15,7 +15,7 @@ public class GrabHandler : MonoBehaviour
 	void Start ()
 	{
 		_inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
-		player = GameObject.Find("Cylinder");
+		player = GameObject.Find("RightTrigger");
 		grabbedObject = null;
 	}
 
@@ -43,5 +43,10 @@ public class GrabHandler : MonoBehaviour
 		
 		isOnDrag = true;
 	}
+
+    public void CreateMeshCollider()
+    {
+
+    }
 }
 

@@ -1297,7 +1297,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: c1ac58f958fd93b49a10161ce774a18e, type: 3}
       propertyPath: m_TagString
-      value: Grab
+      value: Grabbable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1ac58f958fd93b49a10161ce774a18e, type: 3}
@@ -1355,7 +1355,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1632189569177846, guid: c0838f71047cde340b8320435418a398, type: 2}
       propertyPath: m_TagString
-      value: Grab
+      value: Grabbable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0838f71047cde340b8320435418a398, type: 2}
@@ -1502,7 +1502,6 @@ GameObject:
   - component: {fileID: 897712179}
   - component: {fileID: 897712182}
   - component: {fileID: 897712177}
-  - component: {fileID: 897712176}
   m_Layer: 0
   m_Name: RightController
   m_TagString: Untagged
@@ -1525,23 +1524,6 @@ Transform:
   m_Father: {fileID: 1449638347}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &897712176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 897712174}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1220cd4101cce70499402a1eb5e95211, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InputName: TriggerRight
-  NodeType: 5
-  ObjectGrabOffset: {x: 0, y: 0, z: 0}
-  GrabDistance: 0.1
-  GrabTag: Grab
-  ThrowMultiplier: 1.5
 --- !u!114 &897712177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2164,7 +2146,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 46bee165790d2c24f9abecc09e243920, type: 3}
       propertyPath: m_TagString
-      value: Grab
+      value: Grabbable
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 46bee165790d2c24f9abecc09e243920, type: 3}
       propertyPath: m_LocalScale.x
@@ -2912,7 +2894,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1511746606845076, guid: da4ad2310c6a3a44e8c6b74c731ffbc7, type: 2}
       propertyPath: m_TagString
-      value: Grab
+      value: Grabbable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da4ad2310c6a3a44e8c6b74c731ffbc7, type: 2}
@@ -2970,7 +2952,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 90c25ff0db82bf64cbc6b8e405018824, type: 3}
       propertyPath: m_TagString
-      value: Grab
+      value: Grabbable
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 90c25ff0db82bf64cbc6b8e405018824, type: 3}
       propertyPath: m_LocalScale.x
@@ -3002,7 +2984,6 @@ GameObject:
   - component: {fileID: 1754997733}
   - component: {fileID: 1754997731}
   - component: {fileID: 1754997729}
-  - component: {fileID: 1754997730}
   m_Layer: 0
   m_Name: LeftController
   m_TagString: Untagged
@@ -3064,23 +3045,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f91b3e3e8e078cc4890a53391e8e75af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1754997730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1754997724}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1220cd4101cce70499402a1eb5e95211, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InputName: TriggerLeft
-  NodeType: 0
-  ObjectGrabOffset: {x: 0, y: 0, z: 0}
-  GrabDistance: 0.1
-  GrabTag: Grab
-  ThrowMultiplier: 1.5
 --- !u!114 &1754997731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3259,7 +3223,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1258646480729192, guid: c3eb64e478b2bb748ae1501daf818368, type: 2}
       propertyPath: m_TagString
-      value: Grab
+      value: Grabbable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3eb64e478b2bb748ae1501daf818368, type: 2}
@@ -3584,7 +3548,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: dd0682cd55d7f8342b8026ebb1cfc4a5, type: 3}
       propertyPath: m_TagString
-      value: Grab
+      value: Grabbable
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: dd0682cd55d7f8342b8026ebb1cfc4a5, type: 3}
       propertyPath: m_LocalScale.x
@@ -3796,7 +3760,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1502818402513928, guid: d323fc18d7f7cbb4d971d8250d723165, type: 2}
       propertyPath: m_TagString
-      value: Grab
+      value: Grabbable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d323fc18d7f7cbb4d971d8250d723165, type: 2}
