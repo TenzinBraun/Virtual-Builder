@@ -223,9 +223,9 @@ public partial class ControllerManager : MonoBehaviour {
         if (currentTool == getToolName(Tool.CATALOG))
         {
             this.GetComponent<CatalogHandler>().enabled = true;
+            Debug.Log("Enable");
             this.GetComponent<LaserHandler>().enabled = true;
-            this.GetComponent<CatalogHandler>().getCatalog().transform.position = this.transform.position + new Vector3(0, 5, 0);
-
+            this.GetComponent<CatalogHandler>().DropCatalog();
         }
 
         if (currentTool == getToolName(Tool.HAND))
