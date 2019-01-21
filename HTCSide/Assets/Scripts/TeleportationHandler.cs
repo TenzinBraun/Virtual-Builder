@@ -19,10 +19,9 @@ public class TeleportationHandler : MonoBehaviour {
 
     void Update()
     {
-        if (inputManager.UserClick() /*&& rayCast.GetHit().transform.name.Contains("Floor")*/)
-
+        if (inputManager.UserClick())
         {
-
+            Teleport(rayCast.GetHit());
             inputManager.CanClick = false;
 
         }
