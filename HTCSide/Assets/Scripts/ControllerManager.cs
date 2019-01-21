@@ -21,7 +21,7 @@ public partial class ControllerManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        inputManager = this.GetComponent<InputManager>();
         setSecondController();
         rayCast = GameObject.Find(name).GetComponent<RayCast>();
         
@@ -109,20 +109,7 @@ public partial class ControllerManager : MonoBehaviour {
 
     private bool Grab()
     {
-        if (vrMode)
-            return ControllerGrip();
-        else
-            return inputManager.UserGrip();
-    }
-
-    private bool ControllerGrip()
-    {
-        if (name.Equals("RightController"))
-            return inputManager.IsRightGripClicked();
-        else if (name.Equals("LeftController"))
-            return inputManager.IsLeftGripClicked();
-
-        return false;
+        return inputManager.UserGrip();
     }
 
     

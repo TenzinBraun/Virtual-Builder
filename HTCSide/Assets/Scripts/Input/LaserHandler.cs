@@ -14,7 +14,7 @@ public class LaserHandler : MonoBehaviour {
     // Use this for initialization
     void Start () {
         laserLine = GetComponent<LineRenderer>();
-        rayCast = GameObject.Find("LeftController").GetComponent<RayCast>();
+        rayCast = this.GetComponent<RayCast>();
 
         InitCylinderPointer();
     }

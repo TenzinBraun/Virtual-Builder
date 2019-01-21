@@ -25,7 +25,7 @@ public class GrabHandler : MonoBehaviour
     void Start()
     {
         _currentObject = null;
-        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        inputManager = this.GetComponent<InputManager>();
         _lastFramePosition = transform.position;
 
     }
@@ -41,7 +41,7 @@ public class GrabHandler : MonoBehaviour
             if (colliders.Length > 0)
             {
                 //if there are colliders, take the first one if we press the grab button and it has the tag for grabbing
-                if (inputManager.IsRightTriggerClicked() && colliders[0].transform.CompareTag(GrabTag))
+                if (inputManager.IsTriggerClicked() && colliders[0].transform.CompareTag(GrabTag))
                 {
                     //set current object to the object we have picked up
                     _currentObject = colliders[0].transform;

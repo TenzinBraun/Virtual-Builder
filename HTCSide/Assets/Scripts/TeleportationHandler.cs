@@ -12,13 +12,13 @@ public class TeleportationHandler : MonoBehaviour {
     void Start()
     {
         rayCast = GameObject.Find("LeftController").GetComponent<RayCast>();
-        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        inputManager = this.GetComponent<InputManager>();
         player = GameObject.Find("Player");
     }
 
     void Update()
     {
-        if (inputManager.IsLeftTriggerClicked())
+        if (inputManager.IsTriggerClicked())
         {
             Teleport(rayCast.GetHit());
             inputManager.CanClick = false;

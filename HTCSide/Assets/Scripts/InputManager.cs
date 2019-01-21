@@ -3,13 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour {
+public class InputManager : MonoBehaviour
+{
 
 
-    private static readonly string CLICKED_LEFT_TRIGGER_NAME = "TriggerLeft";
-    private static readonly string CLICKED_RIGHT_TRIGGER_NAME = "TriggerRight";
-    private static readonly string CLICKED_LEFT_GRIP_NAME = "GripLeft";
-    private static readonly string CLICKED_RIGHT_GRIP_NAME = "GripRight";
+    private string CLICKED_TRIGGER_NAME;
+    private string CLICKED_GRIP_NAME;
 
     private RayCast rayCast;
 
@@ -20,12 +19,28 @@ public class InputManager : MonoBehaviour {
 
     void Start()
     {
-        rayCast = GameObject.Find("LeftController").GetComponent<RayCast>();
+        rayCast = this.GetComponent<RayCast>();
+
+        getInputNames();
+
         canClick = true;
         canGrip = true;
     }
 
-    
+    private void getInputNames()
+    {
+        if (this.name == "LeftController")
+        {
+            CLICKED_TRIGGER_NAME = "TriggerLeft";
+            CLICKED_GRIP_NAME = "GripLeft";
+        }
+        else if (this.name == "RightController")
+        {
+            CLICKED_TRIGGER_NAME = "TriggerRight";
+            CLICKED_GRIP_NAME = "GripRight";
+
+        }
+    }
 
     public bool CanClick
     {
@@ -48,63 +63,48 @@ public class InputManager : MonoBehaviour {
         canClick = true;
     }
 
-    public bool IsRightTriggerClicked()
+    public bool IsTriggerClicked()
     {
-        return /*CanClick && */(Input.GetAxis(CLICKED_RIGHT_TRIGGER_NAME) == 1);
+        return CanClick && (Input.GetAxis(CLICKED_TRIGGER_NAME) == 1);
     }
 
-    public bool IsLeftTriggerClicked()
-    {
-        return CanClick && (Input.GetAxis(CLICKED_LEFT_TRIGGER_NAME) == 1 || Input.GetButton("LeftClick"));
-    }
 
-    public bool IsRightGripClicked()
+    public bool IsGripClicked()
     {
-        return canGrip && (Input.GetAxis(CLICKED_RIGHT_GRIP_NAME) == 1 );
+        return canGrip && (Input.GetAxis(CLICKED_GRIP_NAME) == 1);
 
-    }
-
-    public bool IsLeftGripClicked()
-    {
-        return canGrip && (Input.GetAxis(CLICKED_LEFT_GRIP_NAME) == 1);
     }
 
     internal bool UserGrip()
     {
-        if (Input.GetKey(KeyCode.G))
+        if (Input.GetKey(KeyCode.G) || IsGripClicked())
         {
             return true;
         }
-        if (IsLeftGripClicked() || IsRightGripClicked())
-        {
-                canGrip = false;
-                return true;   
-        }
-        else
-        {
-            canGrip = true;
-            return false;
-        }
+        return false;
     }
 
     public bool UserClick()
     {
-        return (IsLeftTriggerClicked() || IsRightTriggerClicked()) && rayCast.Hit();
+        return (IsTriggerClicked()) && rayCast.Hit();
     }
 
-    internal String selectedTool(bool vrMode,String controllerName)
+    internal String selectedTool(bool vrMode, String controllerName)
     {
         if (vrMode)
         {
-            GameObject controller = GameObject.Find(controllerName);
-            Collider[] colliders = Physics.OverlapSphere(controller.transform.position, 0.01f);
+            Collider[] colliders = Physics.OverlapSphere(this.transform.position, 0.01f);
+
             if (colliders.Length > 0)
             {
                 if (colliders[0].transform.CompareTag("ToolIcon"))
                     return colliders[0].transform.name;
             }
+
             return null;
-        } else
+
+        }
+        else
         {
             return rayCast.GetHit().transform.name;
         }
