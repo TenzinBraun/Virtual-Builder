@@ -9,19 +9,8 @@
       <e p="Assets" t="Include">
         <e p="FirstPersonController.cs" t="Include" />
         <e p="Scripts" t="Include">
-<<<<<<< HEAD
-          <e p="GrabHandler.cs" t="Include" />
-          <e p="Input" t="Include">
-            <e p="InputManager.cs" t="Include" />
-            <e p="RayCast" t="Include">
-              <e p="LaserHandler.cs" t="Include" />
-              <e p="RayCast.cs" t="Include" />
-            </e>
-          </e>
-          <e p="PlayerPosPointer.cs" t="Include" />
-          <e p="TeleportationHandler.cs" t="Include" />
-=======
           <e p="ControllerManager.cs" t="Include" />
+          <e p="GrabHandler.cs" t="Include" />
           <e p="Input" t="Include">
             <e p="LaserHandler.cs" t="Include" />
             <e p="RayCast.cs" t="Include" />
@@ -30,7 +19,6 @@
           <e p="PlayerPosPointer.cs" t="Include" />
           <e p="TeleportationHandler.cs" t="Include" />
           <e p="Tools.cs" t="Include" />
->>>>>>> menu
         </e>
         <e p="Standard Asset" t="Include">
           <e p="Characters" t="Include">
@@ -106,6 +94,19 @@
             <e p="TimedObjectDestructor.cs" t="Include" />
             <e p="WaypointCircuit.cs" t="Include" />
             <e p="WaypointProgressTracker.cs" t="Include" />
+          </e>
+        </e>
+        <e p="VRElements" t="Include">
+          <e p="Demo Objects" t="Include">
+            <e p="3DTOYS" t="Include">
+              <e p="readme.txt" t="Include" />
+              <e p="rotatecamera.cs" t="Include" />
+            </e>
+          </e>
+          <e p="FantasyEnvironments" t="Include">
+            <e p="Environments" t="Include">
+              <e p="readme.txt" t="Include" />
+            </e>
           </e>
         </e>
       </e>
