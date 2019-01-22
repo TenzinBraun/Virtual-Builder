@@ -42,19 +42,34 @@ public class GrabHandler : MonoBehaviour
             Collider[] colliders = Physics.OverlapSphere(this.transform.position, GrabDistance);
             if (colliders.Length > 0)
             {
+                if (colliders[0].gameObject != lastSelected)
+                {
+                    if (lastSelected != null)
+                    {
+                        lastSelected.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+                    }
+                }
                 lastSelected = colliders[0].gameObject;
-                lastSelected.GetComponent<Renderer>().material.shader = Shader.Find("Particles/Multiply (Double)");
+                lastSelected.GetComponent<Renderer>().material.shader = Shader.Find("Legacy Shaders/Self-Illumin/Diffuse");
 
                 //if there are colliders, take the first one if we press the grab button and it has the tag for grabbing
                 if (inputManager.IsTriggerClicked() && colliders[0].transform.CompareTag(GrabTag))
                 {
+
                     //set current object to the object we have picked up
-                    currentObject = colliders[0].gameObject;
+                    currentObject = lastSelected;
+
+
+                    currentObject.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
 
                     currentObject.GetComponent<Rigidbody>().mass = 10000;
                     currentObject.GetComponent<Rigidbody>().useGravity = false;
                     currentObject.transform.parent = this.transform;
                 }
+            } else
+            {
+                lastSelected.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+                lastSelected = null;
             }
         }
         else
@@ -63,23 +78,7 @@ public class GrabHandler : MonoBehaviour
             //if we we release grab button, release current object
             if (!inputManager.IsTriggerClicked())
             {
-                currentObject.transform.parent = null;
-                //set grab object to non-kinematic (enable physics)
-
-                currentObject.GetComponent<Rigidbody>().useGravity = true;
-
-                //calculate the hand's current velocity
-                Vector3 CurrentVelocity = (transform.position - lastFramePosition) / Time.deltaTime;
-                Vector3 CurrentAngularVelocity = (transform.eulerAngles - lastFrameRotation) / Time.deltaTime;
-
-                //set the grabbed object's velocity to the current velocity of the hand
-                currentObject.GetComponent<Rigidbody>().velocity = CurrentVelocity * ThrowMultiplier;
-                //currentObject.GetComponent<Rigidbody>().ang = CurrentAngularVelocity;
-
-                currentObject.GetComponent<Rigidbody>().mass = 1;
-
-                //release the reference
-                currentObject = null;
+                releaseCurrentObject();
             }
             else
             {
@@ -91,6 +90,35 @@ public class GrabHandler : MonoBehaviour
         //save the current position for calculation of velocity in next frame
         lastFramePosition = transform.position;
         lastFrameRotation = transform.eulerAngles;
+    }
+
+    public void releaseCurrentObject()
+    {
+        if (currentObject != null)
+        {
+            currentObject.transform.parent = null;
+            //set grab object to non-kinematic (enable physics)
+
+            currentObject.GetComponent<Rigidbody>().useGravity = true;
+
+            //calculate the hand's current velocity
+            Vector3 CurrentVelocity = (transform.position - lastFramePosition) / Time.deltaTime;
+            Vector3 CurrentAngularVelocity = (transform.eulerAngles - lastFrameRotation) / Time.deltaTime;
+
+            //set the grabbed object's velocity to the current velocity of the hand
+            currentObject.GetComponent<Rigidbody>().velocity = CurrentVelocity * ThrowMultiplier;
+            //currentObject.GetComponent<Rigidbody>().ang = CurrentAngularVelocity;
+
+            currentObject.GetComponent<Rigidbody>().mass = 1;
+
+            //release the reference
+            currentObject = null;
+        }
+    }
+
+    public GameObject getCurrentObject()
+    {
+        return currentObject;
     }
 }
 
