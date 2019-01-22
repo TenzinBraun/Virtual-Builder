@@ -9,6 +9,8 @@ public class InputManager : MonoBehaviour
 
     private string CLICKED_TRIGGER_NAME;
     private string CLICKED_GRIP_NAME;
+    private string PRESSED_TRACKPAD_NAME;
+
 
     private RayCast rayCast;
 
@@ -33,11 +35,13 @@ public class InputManager : MonoBehaviour
         {
             CLICKED_TRIGGER_NAME = "TriggerLeft";
             CLICKED_GRIP_NAME = "GripLeft";
+            PRESSED_TRACKPAD_NAME = "TrackpadPosLeft";
         }
         else if (this.name == "RightController")
         {
             CLICKED_TRIGGER_NAME = "TriggerRight";
             CLICKED_GRIP_NAME = "GripRight";
+            PRESSED_TRACKPAD_NAME = "TrackpadPosRight";
 
         }
     }
@@ -109,4 +113,20 @@ public class InputManager : MonoBehaviour
             return rayCast.GetHit().transform.name;
         }
     }
+
+    public float getTrackpadPos()
+    {
+        return Input.GetAxis(PRESSED_TRACKPAD_NAME);
+    }
+
+    public bool isTrackpadTopPress()
+    {
+        return false;
+    }
+
+    public bool isTrackpadBottomPress() { 
+    
+        return false;
+    }
+
 }

@@ -13,10 +13,9 @@ public class LaserHandler : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        laserLine = GetComponent<LineRenderer>();
-        rayCast = this.GetComponent<RayCast>();
 
-        InitCylinderPointer();
+        rayCast = this.GetComponent<RayCast>();
+        laserLine = GetComponent<LineRenderer>();
     }
 	
 	// Update is called once per frame
@@ -26,7 +25,6 @@ public class LaserHandler : MonoBehaviour {
             laserLine.enabled = true;
             
             UpdateLaserAndPointerPos(rayCast.GetHit());
-            UpdateLaserAndPointerColor();
         }
         else
         {
@@ -37,29 +35,13 @@ public class LaserHandler : MonoBehaviour {
 
     private void UpdateLaserAndPointerPos(RaycastHit hit)
     {
-
         laserLine.SetPosition(1, hit.point);
         laserLine.SetPosition(0, new Vector3(transform.position.x, transform.position.y, transform.position.z));
-
-        cylinder.transform.position = new Vector3(hit.point.x, 0f, hit.point.z);
-        cylinder.GetComponent<Renderer>().enabled = true;
-
-        UpdateLaserAndPointerColor();
     }
-
-    private void UpdateLaserAndPointerColor()
+    
+    
+    public void setColor(Color color)
     {
-        cylinder.GetComponent<Renderer>().material.color = Color.red;
-    }
-
-    private void InitCylinderPointer()
-    {
-        cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        cylinder.transform.localScale = new Vector3(0.3f, 0.001f, 0.3f);
-
-        cylinder.GetComponent<Collider>().enabled = false;
-        cylinder.GetComponent<MeshRenderer>().allowOcclusionWhenDynamic = false;
-        cylinder.GetComponent<MeshRenderer>().receiveShadows = false;
-        cylinder.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        laserLine.GetComponent<Renderer>().material.color = color;
     }
 }

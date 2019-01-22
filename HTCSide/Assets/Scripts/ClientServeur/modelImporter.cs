@@ -6,9 +6,9 @@ using System.IO;
 //using UnityExtension;
 
 public class ModelImporter{
-    public string FTPID = "user";
-    public string FTPPassword = "user";
-	public string serverIP = "192.168.43.107";
+    public string FTPID = "projetvr";
+    public string FTPPassword = "9tUv55WX.";
+	public string serverIP = "iutbg-lacielp.univ-lyon1.fr";
     public string scriptPath = "C:\\Users\\God builder\\Desktop\\Client Serveur\\CLIENTSERVEUR\\script.txt"; //path of the "script.txt" file, which is used to run the ftp script
 	public string whereToRegister = "C:\\Users\\God builder\\Desktop\\Client Serveur\\CLIENTSERVEUR\\ClientModels";
 
@@ -33,7 +33,7 @@ public class ModelImporter{
 		toReturn.transform.position.Set (0, 0, 0);
         toReturn.name = fileName;
         toReturn.transform.localScale *= 0.001f;
-
+        
 		return toReturn;
 	}
 

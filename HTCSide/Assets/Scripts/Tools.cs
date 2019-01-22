@@ -82,6 +82,7 @@ public partial class ControllerManager {
         Destroy(currentToolIcon);
         currentToolIcon = Instantiate(getToolAsset(currentTool));
 
+        currentToolIcon.GetComponent<MeshCollider>().enabled = false;
         currentToolIcon.transform.localScale *= 0.05f;
         currentToolIcon.transform.parent = this.transform;
         currentToolIcon.transform.position = this.transform.position + new Vector3(0f, 0.033f,0f) ;

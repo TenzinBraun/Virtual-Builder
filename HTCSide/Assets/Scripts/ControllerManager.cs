@@ -38,8 +38,9 @@ public partial class ControllerManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Grab() && !choosingTool && !secondController.isChoosingTool())
+        if (Grab() && !choosingTool && !secondController.isChoosingTool() && !inputManager.IsTriggerClicked())
         {
+            makePlayerStatic();
             disableCurrentTool();
             displayMenu();
             choosingTool = true;
@@ -57,7 +58,6 @@ public partial class ControllerManager : MonoBehaviour {
        if(!choosingTool && currentTool!=null)
             updateCurrentToolPosition();
     }
-    
 
     private void setSecondController()
     {
@@ -183,6 +183,11 @@ public partial class ControllerManager : MonoBehaviour {
         showCurrentTool();
     }
 
+    private void makePlayerStatic()
+    {
+        GameObject.Find("Player").GetComponent<Rigidbody>().velocity *= 0;
+    }
+
     private void disableCurrentTool()
     {
         disableCurrentToolScripts();
@@ -194,6 +199,7 @@ public partial class ControllerManager : MonoBehaviour {
         if (currentTool == getToolName(Tool.CATALOG))
         {
             this.GetComponent<CatalogHandler>().enabled = false;
+
             this.GetComponent<LineRenderer>().enabled = false;
             this.GetComponent<LaserHandler>().enabled = false;
         }
@@ -206,30 +212,41 @@ public partial class ControllerManager : MonoBehaviour {
         if (currentTool == getToolName(Tool.PROPULSER))
         {
             this.GetComponent<PropulserHandler>().enabled = false;
-            GameObject.Find("Player").GetComponent<Rigidbody>().velocity *= 0;
+            
+            GameObject.Find("Player").GetComponent<Rigidbody>().mass = 10000;
         }
 
         if (currentTool == getToolName(Tool.TELEPORTER))
         {
             this.GetComponent<TeleportationHandler>().enabled = false;
+
             this.GetComponent<LineRenderer>().enabled = false;
             this.GetComponent<LaserHandler>().enabled = false;
         }
 
         if (currentTool == getToolName(Tool.TRASH))
         {
+            this.GetComponent<TrashHandler>().leaveTrash();
+            this.GetComponent<TrashHandler>().enabled = false;
 
+            this.GetComponent<LineRenderer>().enabled = false;
+            this.GetComponent<LaserHandler>().enabled = false;
         }
     }
 
     private void enableCurrentToolScript()
     {
+        disableAllScripts();
+
         if (currentTool == getToolName(Tool.CATALOG))
         {
             this.GetComponent<CatalogHandler>().enabled = true;
-            Debug.Log("Enable");
+
             this.GetComponent<LaserHandler>().enabled = true;
             this.GetComponent<LineRenderer>().enabled = true;
+
+            this.GetComponent<LaserHandler>().setColor(Color.magenta);
+
             this.GetComponent<CatalogHandler>().DropCatalog();
         }
 
@@ -241,19 +258,43 @@ public partial class ControllerManager : MonoBehaviour {
         if (currentTool == getToolName(Tool.PROPULSER))
         {
             this.GetComponent<PropulserHandler>().enabled = true;
+            GameObject.Find("Player").GetComponent<Rigidbody>().mass = 1;
         }
 
         if (currentTool == getToolName(Tool.TELEPORTER))
         {
             this.GetComponent<TeleportationHandler>().enabled = true;
+            
             this.GetComponent<LineRenderer>().enabled = true;
             this.GetComponent<LaserHandler>().enabled = true;
+
+            this.GetComponent<LaserHandler>().setColor(Color.green);
         }
 
         if (currentTool == getToolName(Tool.TRASH))
         {
+            this.GetComponent<TrashHandler>().enabled = true;
+
+            this.GetComponent<LineRenderer>().enabled = true;
+            this.GetComponent<LaserHandler>().enabled = true;
+            
+            this.GetComponent<LaserHandler>().setColor(Color.red);
 
         }
+    }
+
+    private void disableAllScripts()
+    {
+
+        this.GetComponent<CatalogHandler>().enabled = false;
+        this.GetComponent<GrabHandler>().enabled = false;
+        this.GetComponent<PropulserHandler>().enabled = false;
+        this.GetComponent<TeleportationHandler>().enabled = false;
+        this.GetComponent<TrashHandler>().enabled = false;
+
+        this.GetComponent<LaserHandler>().enabled = false;
+        this.GetComponent<LineRenderer>().enabled = false;
+
     }
 
     private void showCurrentTool()
@@ -261,5 +302,14 @@ public partial class ControllerManager : MonoBehaviour {
        initCurrentToolIcon();
     }
 
-    
+    public string getCurrentTool()
+    {
+        return currentTool;
+    }
+
+    public ControllerManager getSecondController()
+    {
+        return secondController;
+    }
+
 }
