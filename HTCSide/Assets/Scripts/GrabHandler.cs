@@ -25,6 +25,7 @@ public class GrabHandler : MonoBehaviour
 		Debug.Log("Ok 4");
 		grabbedObject.transform.parent = null;
 		player.transform.DetachChildren();
+		_inputManager.CanClick = false;
 		isOnDrag = false;
 	}
 
@@ -40,7 +41,8 @@ public class GrabHandler : MonoBehaviour
 		var localScale = grabbedObject.transform.localScale;
 		grabbedObject.transform.parent = player.transform;
 		grabbedObject.transform.localScale = localScale;
-		
+
+		_inputManager.CanClick = false;
 		isOnDrag = true;
 	}
 
