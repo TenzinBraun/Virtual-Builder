@@ -132,14 +132,15 @@ public partial class ControllerManager : MonoBehaviour {
         if (vrMode)
         {
             menu.transform.position = this.transform.position;
+            menu.transform.position += this.transform.forward * 0.2f;
             menu.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
             menu.transform.rotation = new Quaternion(0, 0, 0, 0);
-            menu.transform.Rotate(new Vector3(0,transform.rotation.eulerAngles.y+90,0), Space.Self);
+            menu.transform.Rotate(new Vector3(0, this.transform.rotation.eulerAngles.y,0), Space.Self);
         } 
         else     
         {
             menu.transform.position = rayCast.GetHit().point;
-            menu.transform.Rotate(new Vector3(0, rayCast.GetSource().transform.rotation.eulerAngles.y + 90, 0), Space.World);
+            menu.transform.Rotate(new Vector3(0, 0, 0), Space.World);
         }
     }
         
@@ -147,7 +148,7 @@ public partial class ControllerManager : MonoBehaviour {
     private void initMenuAssetsPosition()
     {
         for (int i = 0; i < numberOfTool(); i++)
-            moveToolAsset(i, 0f, 0f, i-2.5f);
+            moveToolAsset(i, 0f, 0f, i-2f);
     }
 
     
@@ -193,6 +194,7 @@ public partial class ControllerManager : MonoBehaviour {
         if (currentTool == getToolName(Tool.CATALOG))
         {
             this.GetComponent<CatalogHandler>().enabled = false;
+            this.GetComponent<LineRenderer>().enabled = false;
             this.GetComponent<LaserHandler>().enabled = false;
         }
 
@@ -203,12 +205,14 @@ public partial class ControllerManager : MonoBehaviour {
 
         if (currentTool == getToolName(Tool.PROPULSER))
         {
-
+            this.GetComponent<PropulserHandler>().enabled = false;
+            GameObject.Find("Player").GetComponent<Rigidbody>().velocity *= 0;
         }
 
         if (currentTool == getToolName(Tool.TELEPORTER))
         {
             this.GetComponent<TeleportationHandler>().enabled = false;
+            this.GetComponent<LineRenderer>().enabled = false;
             this.GetComponent<LaserHandler>().enabled = false;
         }
 
@@ -225,6 +229,7 @@ public partial class ControllerManager : MonoBehaviour {
             this.GetComponent<CatalogHandler>().enabled = true;
             Debug.Log("Enable");
             this.GetComponent<LaserHandler>().enabled = true;
+            this.GetComponent<LineRenderer>().enabled = true;
             this.GetComponent<CatalogHandler>().DropCatalog();
         }
 
@@ -235,12 +240,13 @@ public partial class ControllerManager : MonoBehaviour {
 
         if (currentTool == getToolName(Tool.PROPULSER))
         {
-
+            this.GetComponent<PropulserHandler>().enabled = true;
         }
 
         if (currentTool == getToolName(Tool.TELEPORTER))
         {
             this.GetComponent<TeleportationHandler>().enabled = true;
+            this.GetComponent<LineRenderer>().enabled = true;
             this.GetComponent<LaserHandler>().enabled = true;
         }
 

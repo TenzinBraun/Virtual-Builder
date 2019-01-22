@@ -26,8 +26,7 @@ public partial class ControllerManager {
     {
 
         GameObject toolAsset = toolGameObjects[tool];
-
-        toolAsset.transform.localScale = new Vector3(1f, 1f, 1f);
+        
         toolAsset.SetActive(true);
     }
 
@@ -83,7 +82,7 @@ public partial class ControllerManager {
         Destroy(currentToolIcon);
         currentToolIcon = Instantiate(getToolAsset(currentTool));
 
-        currentToolIcon.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+        currentToolIcon.transform.localScale *= 0.05f;
         currentToolIcon.transform.parent = this.transform;
         currentToolIcon.transform.position = this.transform.position + new Vector3(0f, 0.033f,0f) ;
     }
