@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43864003, g: 0.48676884, b: 0.56704086, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -52,7 +52,7 @@ LightmapSettings:
     m_AlbedoBoost: 1.6
     m_TemporalCoherenceThreshold: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 0
+    m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 10
@@ -154,7 +154,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 6.07
-  m_Range: 15.09
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -172,13 +172,13 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.91
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_ShadowRadius: 1.5
+  m_ShadowRadius: 2
   m_ShadowAngle: 0
 --- !u!1 &48586842
 GameObject:
@@ -514,7 +514,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 6.07
-  m_Range: 15.09
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -532,13 +532,13 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.91
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_ShadowRadius: 1.5
+  m_ShadowRadius: 2
   m_ShadowAngle: 0
 --- !u!1 &110289612
 GameObject:
@@ -777,7 +777,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 6.07
-  m_Range: 15.09
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -795,13 +795,13 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.91
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_ShadowRadius: 1.5
+  m_ShadowRadius: 2
   m_ShadowAngle: 0
 --- !u!1 &204692187
 GameObject:
@@ -1071,7 +1071,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 6.07
-  m_Range: 15.09
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -1089,13 +1089,13 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.91
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_ShadowRadius: 1.5
+  m_ShadowRadius: 2
   m_ShadowAngle: 0
 --- !u!1 &303945842
 GameObject:
@@ -1258,6 +1258,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1220cd4101cce70499402a1eb5e95211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObjectGrabOffset: {x: 0, y: 0, z: 0}
+  GrabDistance: 0.001
+  GrabTag: Grab
+  ThrowMultiplier: 1.5
 --- !u!114 &310184582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1438,72 +1442,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4711060318819486, guid: bfa205ff4dc0a7b4ca4fa2d28a76c25c,
     type: 2}
   m_PrefabInternal: {fileID: 1277984816}
---- !u!1 &349587121
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 349587122}
-  - component: {fileID: 349587123}
-  m_Layer: 0
-  m_Name: Directional Light
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &349587122
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 349587121}
-  m_LocalRotation: {x: 0.60364693, y: -0, z: -0, w: 0.79725176}
-  m_LocalPosition: {x: 0, y: 27.77, z: -15.33}
-  m_LocalScale: {x: 2.36, y: 1.58, z: 2.59}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 74.263, y: 0, z: 0}
---- !u!108 &349587123
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 349587121}
-  m_Enabled: 1
-  serializedVersion: 8
-  m_Type: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!4 &390259699 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4071109823501076, guid: ac61b4e7db30ddb409099c400046ec21,
@@ -1645,6 +1583,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1220cd4101cce70499402a1eb5e95211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObjectGrabOffset: {x: 0, y: 0, z: 0}
+  GrabDistance: 0.001
+  GrabTag: Grab
+  ThrowMultiplier: 1.5
 --- !u!114 &399892348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2454,7 +2396,7 @@ Transform:
   - {fileID: 481498504}
   - {fileID: 211951947}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &774822644
 GameObject:
@@ -2496,7 +2438,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 6.07
-  m_Range: 15.09
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -2514,13 +2456,13 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.91
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_ShadowRadius: 1.5
+  m_ShadowRadius: 2
   m_ShadowAngle: 0
 --- !u!1 &800185042
 GameObject:
@@ -2913,7 +2855,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 6.07
-  m_Range: 15.09
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -2931,13 +2873,13 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.91
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_ShadowRadius: 1.5
+  m_ShadowRadius: 2
   m_ShadowAngle: 0
 --- !u!1 &1006587001
 GameObject:
@@ -3879,7 +3821,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 6.07
-  m_Range: 15.09
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -3897,13 +3839,13 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.91
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_ShadowRadius: 1.5
+  m_ShadowRadius: 2
   m_ShadowAngle: 0
 --- !u!1 &1392454544
 GameObject:
@@ -3945,7 +3887,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 6.07
-  m_Range: 15.09
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -3963,13 +3905,13 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.91
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_ShadowRadius: 1.5
+  m_ShadowRadius: 2
   m_ShadowAngle: 0
 --- !u!4 &1426489314 stripped
 Transform:
@@ -4972,7 +4914,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 6.07
-  m_Range: 15.09
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -4990,13 +4932,13 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.91
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_ShadowRadius: 1.5
+  m_ShadowRadius: 2
   m_ShadowAngle: 0
 --- !u!4 &2085450038 stripped
 Transform:
