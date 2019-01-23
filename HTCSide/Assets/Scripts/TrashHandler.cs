@@ -4,54 +4,111 @@ using UnityEngine;
 
 public class TrashHandler : MonoBehaviour {
 
-    private GameObject lastSelected;
+    private GameObject lastObjectSelected;
+    private GameObject lastObjectDestroyed;
+    private GameObject objectInRange;
+
     private InputManager inputManager;
     private RayCast rayCast;
 
-    public float trashRange = 0.001f;
+    private float trashRange = 0.001f;
 
 	// Use this for initialization
 	void Start () {
-        lastSelected = null;
+        lastObjectSelected = null;
+        lastObjectDestroyed = null;
+
         this.inputManager = this.GetComponent<InputManager>();
         this.rayCast = this.GetComponent<RayCast>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        GameObject inRange = null;
+        updateObjectInRange();
 
-        if (rayCast.Hit())
-            inRange = rayCast.GetHit().collider.gameObject;
-
-        if (inRange != null && inRange.CompareTag("Grab"))
+        if (objectInRange != null && objectInRange.CompareTag("Grab"))
         {
-            if (inRange != lastSelected)
+            if (objectInRange != lastObjectSelected)
             {
-                resetLastSelected();
-                lastSelected = inRange;
-                lastSelected.GetComponent<Renderer>().material.shader = Shader.Find("Particles/Multiply (Double)");
+                updateLastObjectSelected(); 
             }
         }
         
         if (inputManager.IsTriggerClicked())
         {
-            Destroy(lastSelected);
-        }
-    }
+            if(lastObjectDestroyed != null)
+            {
+                Destroy(lastObjectDestroyed);
+            }
 
-    private void resetLastSelected()
-    {
-        if (lastSelected != null)
+            if (lastObjectSelected != null)
+            {
+                inputManager.CanClick = false;
+                destroyLastObjectSelected();
+            }
+            
+        }
+
+        if (inputManager.isTrackpadPressed())
         {
-            lastSelected.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+            undoLastDestruction();
         }
     }
 
-
-    public void leaveTrash()
+    private void updateObjectInRange()
     {
-        resetLastSelected();
+        objectInRange = null;
+
+        if (rayCast.Hit())
+            objectInRange = rayCast.GetHit().collider.gameObject;
+    }
+
+    private void updateLastObjectSelected()
+    {
+        setLastSelectedObjectShaderStandard();
+        lastObjectSelected = objectInRange;
+        setLastSelectedObjectShaderSemiTransparent();
+    }
+
+    private void setLastSelectedObjectShaderStandard()
+    {
+        if (lastObjectSelected != null)
+        {
+            lastObjectSelected.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+        }
+    }
+
+    private void setLastSelectedObjectShaderSemiTransparent()
+    {
+        lastObjectSelected.GetComponent<Renderer>().material.shader = Shader.Find("Particles/Multiply (Double)");
+    }
+
+    private void destroyLastObjectSelected()
+    {
+        saveLastObjectDestroyed();
+        Destroy(lastObjectSelected);
+        lastObjectSelected = null;
+    }
+
+    private void saveLastObjectDestroyed()
+    {
+        lastObjectDestroyed = Instantiate(lastObjectSelected);
+        lastObjectDestroyed.SetActive(false);
+    }
+
+    private void undoLastDestruction()
+    {
+        if (lastObjectDestroyed != null)
+        {
+            lastObjectDestroyed.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+            lastObjectDestroyed.SetActive(true);
+            lastObjectDestroyed = null;
+        }
+    }
+
+    public void OnDisable()
+    {
+        setLastSelectedObjectShaderStandard();
     }
 
 

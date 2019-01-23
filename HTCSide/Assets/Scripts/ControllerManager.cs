@@ -226,7 +226,7 @@ public partial class ControllerManager : MonoBehaviour {
 
         if (currentTool == getToolName(Tool.TRASH))
         {
-            this.GetComponent<TrashHandler>().leaveTrash();
+            this.GetComponent<TrashHandler>().OnDisable();
             this.GetComponent<TrashHandler>().enabled = false;
 
             this.GetComponent<LineRenderer>().enabled = false;
@@ -241,18 +241,18 @@ public partial class ControllerManager : MonoBehaviour {
         if (currentTool == getToolName(Tool.CATALOG))
         {
             this.GetComponent<CatalogHandler>().enabled = true;
+            this.GetComponent<CatalogHandler>().OnEnable();
 
             this.GetComponent<LaserHandler>().enabled = true;
             this.GetComponent<LineRenderer>().enabled = true;
 
             this.GetComponent<LaserHandler>().setColor(Color.magenta);
-
-            this.GetComponent<CatalogHandler>().DropCatalog();
         }
 
         if (currentTool == getToolName(Tool.HAND))
         {
             this.GetComponent<GrabHandler>().enabled = true;
+            this.GetComponent<GrabHandler>().OnEnable();
         }
 
         if (currentTool == getToolName(Tool.PROPULSER))
@@ -287,7 +287,11 @@ public partial class ControllerManager : MonoBehaviour {
     {
 
         this.GetComponent<CatalogHandler>().enabled = false;
+        this.GetComponent<CatalogHandler>().OnDisable();
+
         this.GetComponent<GrabHandler>().enabled = false;
+        this.GetComponent<GrabHandler>().OnDisable();
+
         this.GetComponent<PropulserHandler>().enabled = false;
         this.GetComponent<TeleportationHandler>().enabled = false;
         this.GetComponent<TrashHandler>().enabled = false;

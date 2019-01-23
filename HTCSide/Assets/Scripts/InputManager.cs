@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
 
     private string CLICKED_TRIGGER_NAME;
     private string CLICKED_GRIP_NAME;
+    private string TOUCHED_TRACKPAD_NAME;
     private string PRESSED_TRACKPAD_NAME;
 
 
@@ -35,22 +36,40 @@ public class InputManager : MonoBehaviour
         {
             CLICKED_TRIGGER_NAME = "TriggerLeft";
             CLICKED_GRIP_NAME = "GripLeft";
-            PRESSED_TRACKPAD_NAME = "TrackpadPosLeft";
+            TOUCHED_TRACKPAD_NAME = "TrackpadPosLeft";
+            PRESSED_TRACKPAD_NAME = "TrackpadPressLeft";
+
         }
         else if (this.name == "RightController")
         {
             CLICKED_TRIGGER_NAME = "TriggerRight";
             CLICKED_GRIP_NAME = "GripRight";
-            PRESSED_TRACKPAD_NAME = "TrackpadPosRight";
+            TOUCHED_TRACKPAD_NAME = "TrackpadPosRight";
+            PRESSED_TRACKPAD_NAME = "TrackpadPressRight";
 
         }
     }
+
+    /*public bool CanClick()
+    {
+        if (canClick)
+        {
+            canClick = false;
+            Invoke("EnableClick", CLICK_COOLDOWN_IN_SECOND);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }*/
 
     public bool CanClick
     {
         set
         {
-            if (!value) Invoke("EnableClick", CLICK_COOLDOWN_IN_SECOND);
+            if (!value)
+                Invoke("EnableClick", CLICK_COOLDOWN_IN_SECOND);
 
             canClick = value;
 
@@ -58,7 +77,6 @@ public class InputManager : MonoBehaviour
         get
         {
             return canClick;
-
         }
     }
 
@@ -114,19 +132,30 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public float getTrackpadPos()
+    public float getTrackpadTouchPos()
+    {
+        return Input.GetAxis(TOUCHED_TRACKPAD_NAME);
+    }
+
+    public bool isTrackpadTopTouched()
+    {
+        return getTrackpadTouchPos() < 0;
+    }
+
+    public bool isTrackpadBottomTouched() {
+
+        return getTrackpadTouchPos() > 0;
+    }
+
+    public float getTrackpadPressPos()
     {
         return Input.GetAxis(PRESSED_TRACKPAD_NAME);
     }
 
-    public bool isTrackpadTopPress()
+    public bool isTrackpadPressed()
     {
-        return false;
-    }
-
-    public bool isTrackpadBottomPress() { 
-    
-        return false;
+        Debug.Log("Trackpad " + Input.GetButton(PRESSED_TRACKPAD_NAME));
+        return Input.GetButton(PRESSED_TRACKPAD_NAME); 
     }
 
 }

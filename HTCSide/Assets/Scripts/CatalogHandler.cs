@@ -18,18 +18,19 @@ public class CatalogHandler : MonoBehaviour {
     private InputManager inputManager;
     private ModelImporter modelImporter;
     private GameObject selectedObject;
+    private static bool hasBeenDisplayed = false;
 
 	// Use this for initialization
 	void Start ()
     {
-        catalog = GameObject.Find("Catalog");
+        /*catalog = GameObject.Find("Catalog");
         modelsData = new List<ModelData>();
         loadModelDataFromDB();
         DisplayCatalog();
         rayCast = this.GetComponent<RayCast>();
         inputManager = this.GetComponent<InputManager>();
         modelImporter = new ModelImporter();
-        selectedObject = null;
+        selectedObject = null;*/
     }
 	
 	// Update is called once per frame
@@ -38,7 +39,7 @@ public class CatalogHandler : MonoBehaviour {
         {
             GameObject touchedObject = rayCast.GetHit().collider.gameObject;
 
-            if (inputManager.IsTriggerClicked())
+            if (inputManager.UserClick())
             {
                 if (touchedObject.CompareTag(cellTag))
                 {
@@ -47,9 +48,11 @@ public class CatalogHandler : MonoBehaviour {
                 }
                 else if (selectedObject != null)
                 {
+                    inputManager.CanClick = false;
                     GameObject spawned = Instantiate(selectedObject);
                     spawned.transform.parent = null;
                     spawned.transform.position = rayCast.GetHit().point + new Vector3(0,0.5f,0);
+                    spawned.transform.localScale *= 10;
                     spawned.AddComponent<Rigidbody>();
 
                     if (selectedObject.transform.childCount > 0)
@@ -72,6 +75,35 @@ public class CatalogHandler : MonoBehaviour {
         }
 	}
 
+    public void OnEnable()
+    {
+        catalog = GameObject.Find("Catalog");
+        modelsData = new List<ModelData>();
+        catalog.GetComponent<Rigidbody>().useGravity = true;
+        loadModelDataFromDB();
+        if (!hasBeenDisplayed)
+        {
+            DisplayCatalog();
+            hasBeenDisplayed = true;
+        }
+        rayCast = this.GetComponent<RayCast>();
+        inputManager = this.GetComponent<InputManager>();
+        modelImporter = new ModelImporter();
+        selectedObject = null;
+        DropCatalog();
+    }
+
+    public void OnDisable()
+    {
+        Destroy(selectedObject);
+        catalog.GetComponent<Rigidbody>().useGravity = false;
+        modelsData = null;
+        rayCast = null;
+        inputManager = null;
+        modelImporter = null;
+        catalog.transform.position = new Vector3(0, 0, 0);
+    }
+
     private void importObjectAndSelectIt(string modelName)
     {
         if (selectedObject != null)
@@ -88,19 +120,30 @@ public class CatalogHandler : MonoBehaviour {
         modelsData.Add(new ModelData("stickman", "stickman.png", "stickman.obj", 0));
         modelsData.Add(new ModelData("sword", "sword.png", "sword.obj", 1));
         modelsData.Add(new ModelData("dog", "dog.png", "dog.obj", 2));
+        modelsData.Add(new ModelData("toilet", "earth.png", "toilet.obj", 3));
+        modelsData.Add(new ModelData("handgun", "knight.png", "handgun.obj", 4));
+        modelsData.Add(new ModelData("bugatti", "bugatti.png", "bugatti.obj", 5));
+        modelsData.Add(new ModelData("crate", "oc.png", "crate.obj", 6));
     }
 
     public void DropCatalog()
     {
+        Debug.Log(catalog);
+        Debug.Log(catalog.transform);
+        Debug.Log(catalog.transform.position);
+
+        Debug.Log(this);
+        Debug.Log(this.transform);
+        Debug.Log(this.transform.position);
         catalog.transform.position = this.transform.position;
     }
 
     public void DisplayCatalog()
     {
 
-        for(int i =0;i< modelsData.Count; i++)
+        GameObject catalogObjectElement = GameObject.Find("CatalogObjectElement");
+        for (int i =0;i< modelsData.Count; i++)
         {
-            GameObject catalogObjectElement = GameObject.Find("CatalogObjectElement");
 
             Vector3 cellScale = catalogObjectElement.transform.localScale;
             Vector3 cellPos = catalogObjectElement.GetComponent<RectTransform>().position;
@@ -115,6 +158,7 @@ public class CatalogHandler : MonoBehaviour {
 
             cell.GetComponent<RectTransform>().position += new Vector3((cellScale.x + MARGIN_BETWEEN_CELLS) * (i % 3),(cellScale.y + MARGIN_BETWEEN_CELLS) * (i / 3), 0);
         }
+        catalogObjectElement.SetActive(false);
         
     }
     

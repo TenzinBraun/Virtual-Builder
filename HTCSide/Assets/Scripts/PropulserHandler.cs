@@ -36,12 +36,12 @@ public class PropulserHandler : MonoBehaviour {
 
     private float calculateSpeed()
     {
-        if (inputManager.getTrackpadPos() == 0)
+        if (inputManager.getTrackpadTouchPos() == 0)
         {
             return propulsionForce;
         } else
         {
-            return 10f*(2 - (inputManager.getTrackpadPos() + 1));
+            return 10f*(2 - (inputManager.getTrackpadTouchPos() + 1));
         }
          
     }

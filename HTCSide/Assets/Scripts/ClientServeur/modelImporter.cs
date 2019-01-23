@@ -33,7 +33,6 @@ public class ModelImporter{
         GameObject toReturn = ObjImporter.Import(c);
         toReturn.name = fileName;
 
-        UnityEngine.Debug.Log(toReturn);
         return toReturn;
 	}
 
