@@ -110,11 +110,11 @@ public class ObjImporter {
 	}
 
 	private static List<Hashtable> ImportGeometry(string objString, bool gameObjectPerGroup, bool subMeshPerGroup) {
-		// groupsAsGameObject - set this to true if you want to make a new gameObject for each group
-		// subMeshPerGroup - set this to true if you want to make a new submesh per group and not just per material
+        // groupsAsGameObject - set this to true if you want to make a new gameObject for each group
+        // subMeshPerGroup - set this to true if you want to make a new submesh per group and not just per material
 
-		objString = objString+"\n";  // should always end with a newline otherwse last line is not processed
-		List<Hashtable> geometries = new List<Hashtable>();
+        objString = objString+"\n";  // should always end with a newline otherwse last line is not processed
+        List<Hashtable> geometries = new List<Hashtable>();
 		List<Vector3> rawVs = new List<Vector3>();
 		List<Vector3> rawNs = new List<Vector3>();
 		List<Vector2> rawUs = new List<Vector2>();
@@ -132,7 +132,9 @@ public class ObjImporter {
 		subMeshData["name"] = materialName;
 		subMeshes.Add(subMeshData);
 
-		Hashtable geometry = new Hashtable();
+
+
+        Hashtable geometry = new Hashtable();
 		geometry["topLevelName"] = topLevelName;
 		geometry["name"] = objectName;
 		geometry["rawVs"] = rawVs;
@@ -144,9 +146,12 @@ public class ObjImporter {
 		geometry["subMeshes"] = subMeshes;
 
 		int[] old2NewVIndex = null;
+        
 
-		bool beginOfLine = true;
+        bool beginOfLine = true;
+
 		for(int i=0;i<objString.Length;i++) {
+
 			char c = objString[i];
 
 			// process char
@@ -159,9 +164,9 @@ public class ObjImporter {
 					objectName = objString.Substring(i+2,e-i-2).Trim();
 					if(topLevelName.Length <= 0) topLevelName = objectName;
 					geometry["topLevelName"] = topLevelName;
-//					geometry["name"] = objectName;
+                    //					geometry["name"] = objectName;
 					if(rawVs.Count > 0) {
-						geometries.Add(geometry);
+                        geometries.Add(geometry);
 						geometry = new Hashtable();
 						geometry["topLevelName"] = topLevelName;
 						geometry["name"] = objectName;
@@ -640,7 +645,7 @@ public class ObjImporter {
 				meshPart++;
 			}
 		}
-		return importedGameObject;
+        return importedGameObject;
 	}
 
 	private static void FlipXAxis(ref List<Vector3> vs) {

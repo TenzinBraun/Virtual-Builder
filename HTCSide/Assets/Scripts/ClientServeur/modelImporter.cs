@@ -18,9 +18,9 @@ public class ModelImporter{
 	 */
     public GameObject ImportModel(string filePathInServerDirectory)
 	{
-		ImportViaFTP (filePathInServerDirectory);
-        float timeAtLaunch = Time.realtimeSinceStartup;
-		while (!File.Exists (whereToRegister + "\\" + filePathInServerDirectory ) && Time.realtimeSinceStartup - timeAtLaunch < 10) {}
+        //ImportViaFTP (filePathInServerDirectory);
+        //float timeAtLaunch = Time.realtimeSinceStartup;
+        //while (!File.Exists (whereToRegister + "\\" + filePathInServerDirectory ) && Time.realtimeSinceStartup - timeAtLaunch < 10) {}
         return ImportObj (filePathInServerDirectory);
 	}
 
@@ -29,12 +29,12 @@ public class ModelImporter{
 	{
         System.IO.StreamReader streamReader = new System.IO.StreamReader("C:\\Users\\God builder\\Desktop\\Client Serveur\\CLIENTSERVEUR\\ClientModels\\" + fileName);
         string c = streamReader.ReadToEnd();
+        UnityEngine.Debug.Log(c);
         GameObject toReturn = ObjImporter.Import(c);
-		toReturn.transform.position.Set (0, 0, 0);
         toReturn.name = fileName;
-        toReturn.transform.localScale *= 0.001f;
-        
-		return toReturn;
+
+        UnityEngine.Debug.Log(toReturn);
+        return toReturn;
 	}
 
     private void setObjectNameInScriptFile(string objectName)

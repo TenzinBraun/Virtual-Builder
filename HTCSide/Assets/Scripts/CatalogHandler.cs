@@ -29,38 +29,65 @@ public class CatalogHandler : MonoBehaviour {
         rayCast = this.GetComponent<RayCast>();
         inputManager = this.GetComponent<InputManager>();
         modelImporter = new ModelImporter();
+        selectedObject = null;
     }
 	
 	// Update is called once per frame
 	void Update () {
 		if(rayCast.Hit())
         {
-            if (inputManager.UserClick() && rayCast.GetHit().collider.gameObject.CompareTag(cellTag))
+            GameObject touchedObject = rayCast.GetHit().collider.gameObject;
+
+            if (inputManager.IsTriggerClicked())
             {
-                Thread thread = new Thread(importByThread);
-                thread.Start();
+                if (touchedObject.CompareTag(cellTag))
+                {
+                    string modelName = touchedObject.name;
+                    importObjectAndSelectIt(modelName);
+                }
+                else if (selectedObject != null)
+                {
+                    GameObject spawned = Instantiate(selectedObject);
+                    spawned.transform.parent = null;
+                    spawned.transform.position = rayCast.GetHit().point + new Vector3(0,0.5f,0);
+                    spawned.AddComponent<Rigidbody>();
+
+                    if (selectedObject.transform.childCount > 0)
+                    {
+                        for (int i = 0; i < selectedObject.transform.childCount; i++)
+                        {
+                            spawned.transform.GetChild(i).gameObject.AddComponent<MeshCollider>();
+                            spawned.transform.GetChild(i).gameObject.GetComponent<MeshCollider>().convex = true;
+
+                        }
+                    }
+                    spawned.AddComponent<MeshCollider>();
+                    spawned.GetComponent<MeshCollider>().convex = true;
+                    spawned.GetComponent<MeshCollider>().inflateMesh = true;
+                    spawned.tag = grabTag;
+                }
+
             }
 
         }
 	}
 
-    private void importByThread()
+    private void importObjectAndSelectIt(string modelName)
     {
-        selectedObject = modelImporter.ImportModel(rayCast.GetHit().collider.gameObject.name);
-        selectedObject.transform.localScale.Normalize();
-        selectedObject.transform.position = this.transform.position;
-        selectedObject.AddComponent<Rigidbody>();
-        selectedObject.AddComponent<MeshCollider>();
-        selectedObject.GetComponent<MeshCollider>().convex = true;
-        selectedObject.tag = grabTag;
+        if (selectedObject != null)
+            Destroy(selectedObject);
+        selectedObject = modelImporter.ImportModel(modelName);
+        while (selectedObject.transform.lossyScale.magnitude > 0.005f)
+            selectedObject.transform.localScale *= 0.8f;
+        selectedObject.transform.position = this.transform.position + new Vector3(0,0.05f,0);
+        selectedObject.transform.parent = this.transform;
     }
 
     public void loadModelDataFromDB()
     {
         modelsData.Add(new ModelData("stickman", "stickman.png", "stickman.obj", 0));
-        modelsData.Add(new ModelData("man", "man.png", "man.obj", 1));
-        modelsData.Add(new ModelData("sword", "sword.png", "sword.obj", 2));
-        modelsData.Add(new ModelData("dog", "dog.png", "dog.obj", 3));
+        modelsData.Add(new ModelData("sword", "sword.png", "sword.obj", 1));
+        modelsData.Add(new ModelData("dog", "dog.png", "dog.obj", 2));
     }
 
     public void DropCatalog()

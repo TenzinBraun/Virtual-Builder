@@ -68,7 +68,8 @@ public class GrabHandler : MonoBehaviour
                 }
             } else
             {
-                lastSelected.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+                if(lastSelected != null)
+                    lastSelected.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
                 lastSelected = null;
             }
         }
