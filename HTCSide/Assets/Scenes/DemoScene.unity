@@ -1411,7 +1411,12 @@ Prefab:
     - target: {fileID: 20847611988872424, guid: 2e78f60f695626144986ff4a9cf1cd92,
         type: 2}
       propertyPath: field of view
-      value: 76
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 20847611988872424, guid: 2e78f60f695626144986ff4a9cf1cd92,
+        type: 2}
+      propertyPath: orthographic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e78f60f695626144986ff4a9cf1cd92, type: 2}
@@ -4544,12 +4549,11 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2106192780}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5778e5e62bdc02248ba9cfd83c52e3e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVelocity: 150
   VignetteFalloff: 2.2
   VignetteOuterValue: 1
   VignetteInnerValue: 0
@@ -4568,7 +4572,7 @@ MonoBehaviour:
   IntegrationStage: 1
   FinalVignetteShader: {fileID: 4800000, guid: d4c4c6a3a749d0f49a5275153224efbf, type: 3}
   FinalVignetteMaterial: {fileID: 0}
-  isHDR: 0
+  isHDR: 1
   isSPSR: 0
   pipelineFoldout: 0
   aboutFoldout: 0

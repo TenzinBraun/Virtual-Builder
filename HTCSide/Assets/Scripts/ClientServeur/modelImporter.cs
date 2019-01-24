@@ -18,9 +18,9 @@ public class ModelImporter{
 	 */
     public GameObject ImportModel(string filePathInServerDirectory)
 	{
-        //ImportViaFTP (filePathInServerDirectory);
-        //float timeAtLaunch = Time.realtimeSinceStartup;
-        //while (!File.Exists (whereToRegister + "\\" + filePathInServerDirectory ) && Time.realtimeSinceStartup - timeAtLaunch < 10) {}
+        ImportViaFTP ("\\projetvr\\" + filePathInServerDirectory);
+        float timeAtLaunch = Time.realtimeSinceStartup;
+        while (!File.Exists (whereToRegister + "\\" + filePathInServerDirectory ) && Time.realtimeSinceStartup - timeAtLaunch < 10) {}
         return ImportObj (filePathInServerDirectory);
 	}
 
@@ -46,7 +46,7 @@ public class ModelImporter{
             FTPPassword,
             "get",
             objectName,
-            "\""+whereToRegister+"\\" + objectName+"\"",
+            "\""+whereToRegister/*+"\\"*/ + objectName+"\"",
             "quit"};
         System.IO.File.WriteAllLines(scriptPath, toWrite);
     }
