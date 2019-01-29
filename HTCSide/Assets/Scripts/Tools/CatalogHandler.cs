@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Threading;
 
-public class CatalogHandler : MonoBehaviour {
-
+public class CatalogHandler : ToolsHandler {
+    
     public string cellName = "CatalogObjectElement";
     private string cellTag = "CatalogGrab";
     private string grabTag = "Grab";
@@ -75,7 +75,8 @@ public class CatalogHandler : MonoBehaviour {
         }
 	}
 
-    public void OnEnable()
+    override
+    public void enable()
     {
         catalog = GameObject.Find("Catalog");
         modelsData = new List<ModelData>();
@@ -93,7 +94,8 @@ public class CatalogHandler : MonoBehaviour {
         DropCatalog();
     }
 
-    public void OnDisable()
+    override
+    public void disable()
     {
         Destroy(selectedObject);
         catalog.GetComponent<Rigidbody>().useGravity = false;

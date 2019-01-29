@@ -5,34 +5,37 @@ using UnityEngine;
 
 
 public partial class ControllerManager : MonoBehaviour {
-    //Partial class -> Tool declaration & methods in Tools.cs
     
     private InputManager inputManager;
     private ControllerManager secondController;
     private RayCast rayCast;
 
+    public List<String> toolNames;
+    public string defaultToolName;
+
+    private List<ToolsHandler> tools;
+
     private GameObject menu;
 
-    string currentTool;
-    GameObject currentToolIcon;
+    private ToolsHandler currentTool;
+    private GameObject currentToolIcon;
 
     bool choosingTool = false;
     bool vrMode;
 
 	// Use this for initialization
-	void Start () {
+	void Start () { 
         inputManager = this.GetComponent<InputManager>();
         setSecondController();
-        rayCast = GameObject.Find(name).GetComponent<RayCast>();
-        
-        getControllerMenu();
+        rayCast = this.GetComponent<RayCast>();
 
-        initToolAssets();
-        initMenuAssetsPosition();
+        tools = new List<ToolsHandler>();
+
+        initMenu();
 
         setDefaultCurrentTool();
         
-        hideMenuAssets();
+        hideMenu();
     }
     
 
@@ -46,17 +49,18 @@ public partial class ControllerManager : MonoBehaviour {
             choosingTool = true;
         }
             
-
         if (!Grab() && choosingTool)
         {
-            if (getSelectedTool() != -1)
+            if (getSelectedTool() != null)
+            {
                 setCurrentTool(getSelectedTool());
+                enableCurrentTool();
+            }
 
+            choosingTool = false;
             hideMenu();
+            allowPlayerMovement();
         }
-
-       if(!choosingTool && currentTool!=null)
-            updateCurrentToolPosition();
     }
 
     private void setSecondController()
@@ -72,58 +76,49 @@ public partial class ControllerManager : MonoBehaviour {
             vrMode = false;
     }
 
-    private void getControllerMenu()
+    private void initMenu()
     {
-        if (vrMode)
+        for (int i = 0; i < toolNames.Count; i++)
         {
-            if (name.Equals("RightController"))
-                menu = GameObject.Find("RightMenu");
-            else if (name.Equals("LeftController"))
-                menu = GameObject.Find("LeftMenu");
-        } else
-        {
-            menu = GameObject.Find("Menu");
+            string toolHandlerName = toolNames[i] + "Handler";
+            ToolsHandler toolHandler = this.GetComponent(Type.GetType(toolHandlerName)) as ToolsHandler;
+            tools.Add(toolHandler);
         }
+        
+        string menuName = this.name + "Menu";
+        menu = new GameObject(menuName);
+
+        for(int i=0 ; i < tools.Count ; i++)
+        {
+            tools[i].getToolIcon().transform.parent = menu.transform;
+        }
+
+        initMenuAssetsPosition();
     }
 
-    private void setDefaultCurrentTool()
+    private void initMenuAssetsPosition()
     {
-        if (name.Equals("RightController"))
-            setCurrentTool(Tool.HAND);
-        else if (name.Equals("LeftController"))
-            setCurrentTool(Tool.TELEPORTER);
+        for (int i = 0; i < tools.Count; i++)
+        {
+            float offset = (float)i - (((float)tools.Count - 1f) / 2f);
+            tools[i].getToolIcon().transform.position = new Vector3(0, 0, offset);
+        }
     }
 
     private void hideMenu()
     {
-        choosingTool = false;
-        hideMenuAssets();
+        menu.SetActive(false);
     }
-
-    private void hideMenuAssets()
-    {
-        for (int i = 0; i < numberOfTool(); i++)
-            hideToolAsset(i);
-    }
-    
 
     private bool Grab()
     {
         return inputManager.UserGrip();
     }
 
-    
-
     private void displayMenu()
     {
-        showMenuAssets();
         initMenuPostition();
-    }
-    
-    private void showMenuAssets()
-    {
-        for (int i = 0; i < numberOfTool(); i++)
-            showToolAsset(i);
+        menu.SetActive(true);
     }
 
     private void initMenuPostition()
@@ -142,52 +137,103 @@ public partial class ControllerManager : MonoBehaviour {
             menu.transform.position = rayCast.GetHit().point;
             menu.transform.Rotate(new Vector3(0, 0, 0), Space.World);
         }
+    } 
+
+    private void setDefaultCurrentTool()
+    {
+        for(int i=0; i < tools.Count; i++)
+        {
+            if (defaultToolName == tools[i].getToolName())
+            {
+                setCurrentTool(tools[i]);
+            }
+        }
     }
+
+    private void setCurrentTool(ToolsHandler tool)
+    {
+        if(tool != null)
+        {
+            if (currentTool != null)
+            {
+                currentTool.disable();
+                destroyCurrentToolIcon();
+            }
+
+            currentTool = tool;
+        }
+    }
+
+    private void destroyCurrentToolIcon()
+    {
+        Destroy(currentToolIcon);
+    }
+
+    private void showCurrentTool()
+    {
+        currentToolIcon = Instantiate(currentTool.getToolIcon());
         
-
-    private void initMenuAssetsPosition()
-    {
-        for (int i = 0; i < numberOfTool(); i++)
-            moveToolAsset(i, 0f, 0f, i-2f);
+        if (vrMode)
+        {
+            currentToolIcon.GetComponent<MeshCollider>().enabled = false;
+            currentToolIcon.transform.localScale *= 0.05f;
+            currentToolIcon.transform.parent = this.transform;
+            currentToolIcon.transform.position = this.transform.position + new Vector3(0f, 0.033f, 0f);
+        } else
+        {
+            currentToolIcon.transform.localScale *= 0.2f;
+            currentToolIcon.transform.position = GameObject.Find("FirstPersonCharacter").GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 2.0f));
+            currentToolIcon.transform.parent = GameObject.Find("FirstPersonCharacter").transform;
+        }
+        
     }
 
-    
-
-    private int getSelectedTool()
+    private ToolsHandler getSelectedTool()
     {
-        return getToolAssetIndice(inputManager.selectedTool(vrMode,name));
-    }
+        string selectedTool = inputManager.getSelectedTool(vrMode, this.name);
 
-    private bool isChoosingTool()
-    {
-        return choosingTool;
-    }
-
-    private void setCurrentTool(int toolIndex)
-    {
-        currentTool = getToolName((Tool)toolIndex);
-
-        enableCurrentToolScript();
-
-        showCurrentTool();
-    }
-
-  
-
-    private void setCurrentTool(Tool Tool)
-    {
-        currentTool = getToolName(Tool);
-
-        enableCurrentToolScript();
-
-        showCurrentTool();
+        for(int i=0; i<tools.Count; i++)
+        {
+            if (tools[i].getToolName()==selectedTool)
+            {
+                return tools[i];
+            }
+        }
+        return null;
+        
     }
 
     private void makePlayerStatic()
     {
-        GameObject.Find("Player").GetComponent<Rigidbody>().velocity *= 0;
+        GameObject.Find("Player").GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
     }
 
+    private void allowPlayerMovement()
+    {
+        GameObject.Find("Player").GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+    }
+
+    private void disableCurrentTool()
+    {
+        if(currentTool!=null)
+        {
+            currentTool.disable();
+            destroyCurrentToolIcon();
+        }
+    }
+
+
+    private void enableCurrentTool ()
+    {
+        if(currentTool != null)
+        {
+            currentTool.enable();
+            showCurrentTool();
+        }
+    }
+
+
+    /*
     private void disableCurrentTool()
     {
         disableCurrentToolScripts();
@@ -218,7 +264,7 @@ public partial class ControllerManager : MonoBehaviour {
 
         if (currentTool == getToolName(Tool.TELEPORTER))
         {
-            this.GetComponent<TeleportationHandler>().enabled = false;
+            this.GetComponent<TeleporterHandler>().enabled = false;
 
             this.GetComponent<LineRenderer>().enabled = false;
             this.GetComponent<LaserHandler>().enabled = false;
@@ -226,7 +272,7 @@ public partial class ControllerManager : MonoBehaviour {
 
         if (currentTool == getToolName(Tool.TRASH))
         {
-            this.GetComponent<TrashHandler>().OnDisable();
+            this.GetComponent<TrashHandler>().disable();
             this.GetComponent<TrashHandler>().enabled = false;
 
             this.GetComponent<LineRenderer>().enabled = false;
@@ -241,7 +287,7 @@ public partial class ControllerManager : MonoBehaviour {
         if (currentTool == getToolName(Tool.CATALOG))
         {
             this.GetComponent<CatalogHandler>().enabled = true;
-            this.GetComponent<CatalogHandler>().OnEnable();
+            this.GetComponent<CatalogHandler>().enable();
 
             this.GetComponent<LaserHandler>().enabled = true;
             this.GetComponent<LineRenderer>().enabled = true;
@@ -252,7 +298,7 @@ public partial class ControllerManager : MonoBehaviour {
         if (currentTool == getToolName(Tool.HAND))
         {
             this.GetComponent<GrabHandler>().enabled = true;
-            this.GetComponent<GrabHandler>().OnEnable();
+            this.GetComponent<GrabHandler>().enable();
         }
 
         if (currentTool == getToolName(Tool.PROPULSER))
@@ -263,7 +309,7 @@ public partial class ControllerManager : MonoBehaviour {
 
         if (currentTool == getToolName(Tool.TELEPORTER))
         {
-            this.GetComponent<TeleportationHandler>().enabled = true;
+            this.GetComponent<TeleporterHandler>().enabled = true;
             
             this.GetComponent<LineRenderer>().enabled = true;
             this.GetComponent<LaserHandler>().enabled = true;
@@ -287,30 +333,31 @@ public partial class ControllerManager : MonoBehaviour {
     {
 
         this.GetComponent<CatalogHandler>().enabled = false;
-        this.GetComponent<CatalogHandler>().OnDisable();
+        this.GetComponent<CatalogHandler>().disable();
 
         this.GetComponent<GrabHandler>().enabled = false;
-        this.GetComponent<GrabHandler>().OnDisable();
+        this.GetComponent<GrabHandler>().disable();
 
         this.GetComponent<PropulserHandler>().enabled = false;
-        this.GetComponent<TeleportationHandler>().enabled = false;
+        this.GetComponent<TeleporterHandler>().enabled = false;
         this.GetComponent<TrashHandler>().enabled = false;
 
         this.GetComponent<LaserHandler>().enabled = false;
         this.GetComponent<LineRenderer>().enabled = false;
 
     }
+    */
 
-    private void showCurrentTool()
-    {
-       initCurrentToolIcon();
-    }
-
-    public string getCurrentTool()
+    public ToolsHandler getCurrentTool()
     {
         return currentTool;
     }
 
+    private bool isChoosingTool()
+    {
+        return choosingTool;
+    }
+    
     public ControllerManager getSecondController()
     {
         return secondController;

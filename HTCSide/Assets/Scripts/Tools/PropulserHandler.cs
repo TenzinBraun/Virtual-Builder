@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PropulserHandler : MonoBehaviour {
+public class PropulserHandler : ToolsHandler {
 
     private InputManager inputManager;
     private GameObject player;
@@ -26,12 +26,24 @@ public class PropulserHandler : MonoBehaviour {
         {
             player.GetComponent<Rigidbody>().AddForce(this.transform.forward * propulsionForce);
         }
-        if(this.GetComponent<ControllerManager>().getSecondController().getCurrentTool() == "PROPULSER")
+
+        /*if(this.GetComponent<ControllerManager>().getSecondController().getCurrentTool() == "PROPULSER")
             player.GetComponent<Rigidbody>().AddForce(player.GetComponent<Rigidbody>().velocity * -1 * (frixion/2));
         else
             player.GetComponent<Rigidbody>().AddForce(player.GetComponent<Rigidbody>().velocity * -1 * frixion);
+        */
 
         endFrame();
+    }
+
+    override
+    public void enable()
+    {
+    }
+
+    override
+    public void disable()
+    {
     }
 
     private float calculateSpeed()

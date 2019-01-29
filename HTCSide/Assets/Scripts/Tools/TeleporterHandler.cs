@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeleportationHandler : MonoBehaviour {
+public class TeleporterHandler : ToolsHandler {
 
 
     private RayCast rayCast;
@@ -23,6 +23,16 @@ public class TeleportationHandler : MonoBehaviour {
             Teleport(rayCast.GetHit());
             inputManager.CanClick = false;
         }
+    }
+
+    override
+    public void enable()
+    {
+    }
+
+    override
+    public void disable()
+    {
     }
 
     public void Teleport(RaycastHit hit)
