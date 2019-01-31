@@ -4,8 +4,8 @@ using UnityEngine;
 
 public partial class ControllerManager {
 
-    private enum Tool { TELEPORTER = 0, PROPULSER = 1, HAND = 2, TRASH = 3, CATALOG = 4 };
-    public List<GameObject> toolGameObjects;
+    /*private enum Tool { TELEPORTER = 0, PROPULSER = 1, HAND = 2, TRASH = 3, CATALOG = 4 };
+    private List<GameObject> toolGameObjects;
 
     private void initToolAssets()
     {
@@ -37,10 +37,6 @@ public partial class ControllerManager {
 
     }
 
-    private void setToolAsset(Tool tool,int position)
-    {
-        toolGameObjects.Insert(position,menu.transform.GetChild(position).gameObject);
-    }
 
     private int numberOfTool()
     {
@@ -77,21 +73,7 @@ public partial class ControllerManager {
         return (Enum.GetName(typeof(Tool), tool));
     }
 
-    private void initCurrentToolIcon()
-    {
-        Destroy(currentToolIcon);
-        currentToolIcon = Instantiate(getToolAsset(currentTool));
-
-        currentToolIcon.GetComponent<MeshCollider>().enabled = false;
-        currentToolIcon.transform.localScale *= 0.05f;
-        currentToolIcon.transform.parent = this.transform;
-        currentToolIcon.transform.position = this.transform.position + new Vector3(0f, 0.033f,0f) ;
-    }
-
-    private void destroyCurrentToolIcon()
-    {
-        Destroy(currentToolIcon);
-    }
+   
 
     public void updateCurrentToolPosition()
     {
@@ -102,7 +84,7 @@ public partial class ControllerManager {
             }
             else
             {
-                currentToolIcon.transform.position = Camera.current.ViewportToWorldPoint(new Vector3(0.1f, 0.8f, 2.0f));
+                
             }
         }
     }
@@ -110,5 +92,5 @@ public partial class ControllerManager {
     private GameObject getToolAsset(String tool)
     {
         return toolGameObjects[getToolAssetIndice(getToolAssetName((Tool)Enum.Parse(typeof(Tool), tool)))];
-    }
+    }*/
 }

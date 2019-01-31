@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrashHandler : MonoBehaviour {
+public class TrashHandler : ToolsHandler {
 
     private GameObject lastObjectSelected;
     private GameObject lastObjectDestroyed;
@@ -15,6 +15,8 @@ public class TrashHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        this.toolName = "Trash";
+
         lastObjectSelected = null;
         lastObjectDestroyed = null;
 
@@ -53,6 +55,17 @@ public class TrashHandler : MonoBehaviour {
         {
             undoLastDestruction();
         }
+    }
+
+    override
+    public void enable()
+    {
+    }
+
+    override
+    public void disable()
+    {
+        setLastSelectedObjectShaderStandard();
     }
 
     private void updateObjectInRange()
@@ -105,12 +118,4 @@ public class TrashHandler : MonoBehaviour {
             lastObjectDestroyed = null;
         }
     }
-
-    public void OnDisable()
-    {
-        setLastSelectedObjectShaderStandard();
-    }
-
-
-
 }

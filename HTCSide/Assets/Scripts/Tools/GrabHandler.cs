@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-public class GrabHandler : MonoBehaviour
+public class GrabHandler : ToolsHandler
 {
     private InputManager inputManager;
     public Vector3 ObjectGrabOffset;
@@ -25,20 +25,6 @@ public class GrabHandler : MonoBehaviour
 
     void Start()
     {
-
-    }
-
-    public void OnEnable()
-    {
-        inputManager = this.GetComponent<InputManager>();
-        grabbedObject = null;
-        lastFramePosition = this.transform.position;
-    }
-
-    public void OnDisable()
-    {
-        inputManager = null;
-        grabbedObject = null;
     }
 
     void Update()
@@ -64,9 +50,19 @@ public class GrabHandler : MonoBehaviour
         updateLastFramePositionAndRotation();
     }
 
-    private bool grabbing()
+    override
+    public void enable()
     {
-        return (grabbedObject != null);
+        inputManager = this.GetComponent<InputManager>();
+        grabbedObject = null;
+        lastFramePosition = this.transform.position;
+    }
+
+    override
+    public void disable()
+    {
+        inputManager = null;
+        grabbedObject = null;
     }
 
     private void updateObjectInRange()
@@ -78,14 +74,26 @@ public class GrabHandler : MonoBehaviour
             setStandardObjectShader(lastObjectInRange);
         }
 
-        
-
         if (isGrabbable(inRange))
             lastObjectInRange = inRange;
         else
             lastObjectInRange = null;
 
         setSelfIlluminObjectShader(lastObjectInRange);
+    }
+
+    private bool grabbing()
+    {
+        return (grabbedObject != null);
+    }
+
+    private void grabLastObjectInRange()
+    {
+        grabbedObject = lastObjectInRange;
+        setStandardObjectShader(grabbedObject);
+        grabbedObject.GetComponent<Rigidbody>().mass = 10000;
+        grabbedObject.GetComponent<Rigidbody>().useGravity = false;
+        grabbedObject.transform.parent = this.transform;
     }
 
     public GameObject getObjectInRange()
@@ -121,15 +129,7 @@ public class GrabHandler : MonoBehaviour
             return toTest.transform.CompareTag(GrabTag);
     }
 
-    private void grabLastObjectInRange()
-    {
-        //if(this.GetComponent<ControllerManager>().getSecondController().gameObject.GetComponent<GrabHandler>().is)
-        grabbedObject = lastObjectInRange;
-        setStandardObjectShader(grabbedObject);
-        grabbedObject.GetComponent<Rigidbody>().mass = 10000;
-        grabbedObject.GetComponent<Rigidbody>().useGravity = false;
-        grabbedObject.transform.parent = this.transform;
-    }
+    
 
     public void releaseGrabbedObject()
     {
@@ -145,7 +145,6 @@ public class GrabHandler : MonoBehaviour
             Vector3 CurrentVelocity = getCurrentVelocity();
             Vector3 CurrentAngularVelocity = getCurrentAngularVelocity();
             setGrabbedObjectVelocity(CurrentVelocity * ThrowMultiplier);
-            //setGrabbedObjectAngularVelocity(CurrentAngularVelocity);
 
             grabbedObject.GetComponent<Rigidbody>().mass = 1;
             grabbedObject = null;
@@ -175,8 +174,6 @@ public class GrabHandler : MonoBehaviour
     private void makeGrabbedObjectStill()
     {
         grabbedObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        //setGrabbedObjectVelocity(new Vector3(0, 0, 0));
-        //setGrabbedObjectAngularVelocity(new Vector3(0, 0, 0));
     }
 
     private void updateLastFramePositionAndRotation()

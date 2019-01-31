@@ -50,20 +50,6 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    /*public bool CanClick()
-    {
-        if (canClick)
-        {
-            canClick = false;
-            Invoke("EnableClick", CLICK_COOLDOWN_IN_SECOND);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }*/
-
     public bool CanClick
     {
         set
@@ -111,7 +97,7 @@ public class InputManager : MonoBehaviour
         return (IsTriggerClicked()) && rayCast.Hit();
     }
 
-    internal String selectedTool(bool vrMode, String controllerName)
+    internal String getSelectedTool(bool vrMode, String controllerName)
     {
         if (vrMode)
         {
@@ -120,7 +106,7 @@ public class InputManager : MonoBehaviour
             if (colliders.Length > 0)
             {
                 if (colliders[0].transform.CompareTag("ToolIcon"))
-                    return colliders[0].transform.name;
+                    return colliders[0].transform.name.Replace("Icon", "");
             }
 
             return null;
@@ -128,7 +114,7 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            return rayCast.GetHit().transform.name;
+            return rayCast.GetHit().transform.name.Replace("Icon", "");
         }
     }
 
