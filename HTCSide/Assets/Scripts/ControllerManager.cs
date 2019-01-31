@@ -43,7 +43,7 @@ public partial class ControllerManager : MonoBehaviour {
     void Update () {
         if (Grab() && !choosingTool && !secondController.isChoosingTool() && !inputManager.IsTriggerClicked())
         {
-            makePlayerStatic();
+            //makePlayerStatic();
             disableCurrentTool();
             displayMenu();
             choosingTool = true;
@@ -54,12 +54,11 @@ public partial class ControllerManager : MonoBehaviour {
             if (getSelectedTool() != null)
             {
                 setCurrentTool(getSelectedTool());
-                enableCurrentTool();
             }
 
             choosingTool = false;
             hideMenu();
-            allowPlayerMovement();
+            //allowPlayerMovement();
         }
     }
 
@@ -152,15 +151,21 @@ public partial class ControllerManager : MonoBehaviour {
 
     private void setCurrentTool(ToolsHandler tool)
     {
+        disableAllTools();
         if(tool != null)
         {
-            if (currentTool != null)
-            {
-                currentTool.disable();
-                destroyCurrentToolIcon();
-            }
-
+            destroyCurrentToolIcon();
             currentTool = tool;
+            currentTool.enable();
+            showCurrentTool();
+        }
+    }
+
+    private void disableAllTools()
+    {
+        for(int i = 0; i < tools.Count; i++)
+        {
+            tools[i].disable();
         }
     }
 

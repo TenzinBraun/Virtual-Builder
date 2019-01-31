@@ -106,7 +106,11 @@ public class InputManager : MonoBehaviour
             if (colliders.Length > 0)
             {
                 if (colliders[0].transform.CompareTag("ToolIcon"))
-                    return colliders[0].transform.name.Replace("Icon", "");
+                {
+                    Debug.Log(colliders[0].transform.name);
+                    Debug.Log(colliders[0].transform.name.Replace("Icon(Clone)", ""));
+                    return colliders[0].transform.name.Replace("Icon(Clone)", "");
+                }
             }
 
             return null;

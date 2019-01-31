@@ -589,7 +589,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1350233109746170, guid: d94423cbea466f549960e80f067931a0, type: 2}
       propertyPath: m_Name
-      value: HandIcon
+      value: GrabIcon
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 135794044226386616, guid: d94423cbea466f549960e80f067931a0, type: 2}
@@ -2047,7 +2047,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb7a396c977562f45b2b0a0d8ec154ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolGameObjects: []
+  toolNames:
+  - Trash
+  - Catalog
+  - Grab
+  defaultToolName: Grab
 --- !u!114 &897712183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3714,7 +3718,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb7a396c977562f45b2b0a0d8ec154ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolGameObjects: []
+  toolNames:
+  - Propulser
+  - Teleporter
+  defaultToolName: Propulser
 --- !u!120 &1754997732
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -4554,36 +4561,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5778e5e62bdc02248ba9cfd83c52e3e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VignetteFalloff: 2.2
-  VignetteOuterValue: 1
-  VignetteInnerValue: 0
-  VignetteInnerValueDistance: 1
-  VignetteOuterValueDistance: 1
-  VignetteMode: 1
-  VignetteCenter: {x: 0.5, y: 0.5}
-  VignetteInnerColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  VignetteOuterColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 1
-  VignetteInnerSaturation: 1
-  VignetteOuterSaturation: 0
-  VignetteDebugEnabled: 0
-  IsAnamorphicVignette: 0
-  EnableSaturationVignette: 0
-  IntegrationType: 2
-  IntegrationStage: 1
-  FinalVignetteShader: {fileID: 4800000, guid: d4c4c6a3a749d0f49a5275153224efbf, type: 3}
-  FinalVignetteMaterial: {fileID: 0}
-  isHDR: 1
-  isSPSR: 0
-  pipelineFoldout: 0
-  aboutFoldout: 0
 --- !u!54 &2106192783
 Rigidbody:
   m_ObjectHideFlags: 0

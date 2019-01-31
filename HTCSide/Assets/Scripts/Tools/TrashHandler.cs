@@ -26,45 +26,55 @@ public class TrashHandler : ToolsHandler {
 	
 	// Update is called once per frame
 	void Update () {
-        updateObjectInRange();
+        if (enabled)
+        {
+            updateObjectInRange();
 
-        if (objectInRange != null && objectInRange.CompareTag("Grab"))
-        {
-            if (objectInRange != lastObjectSelected)
+            if (objectInRange != null && objectInRange.CompareTag("Grab"))
             {
-                updateLastObjectSelected(); 
-            }
-        }
-        
-        if (inputManager.IsTriggerClicked())
-        {
-            if(lastObjectDestroyed != null)
-            {
-                Destroy(lastObjectDestroyed);
+                if (objectInRange != lastObjectSelected)
+                {
+                    updateLastObjectSelected();
+                }
             }
 
-            if (lastObjectSelected != null)
+            if (inputManager.IsTriggerClicked())
             {
-                inputManager.CanClick = false;
-                destroyLastObjectSelected();
-            }
-            
-        }
+                if (lastObjectDestroyed != null)
+                {
+                    Destroy(lastObjectDestroyed);
+                }
 
-        if (inputManager.isTrackpadPressed())
-        {
-            undoLastDestruction();
+                if (lastObjectSelected != null)
+                {
+                    inputManager.CanClick = false;
+                    destroyLastObjectSelected();
+                }
+
+            }
+
+            if (inputManager.isTrackpadPressed())
+            {
+                undoLastDestruction();
+            }
         }
     }
 
     override
     public void enable()
     {
+        enabled = true;
+        this.GetComponent<LineRenderer>().enabled = true;
+        this.GetComponent<LaserHandler>().enabled = true;
     }
 
     override
     public void disable()
     {
+
+        enabled = false;
+        this.GetComponent<LineRenderer>().enabled = false;
+        this.GetComponent<LaserHandler>().enabled = false;
         setLastSelectedObjectShaderStandard();
     }
 

@@ -29,30 +29,37 @@ public class GrabHandler : ToolsHandler
 
     void Update()
     {
-        updateObjectInRange();
+        if (enabled)
+        {
+            updateObjectInRange();
 
-        if (!grabbing())
-        {
-            if (inputManager.IsTriggerClicked())
-                grabLastObjectInRange();
-        }
-        else
-        {
-            if (!inputManager.IsTriggerClicked())
-                releaseGrabbedObject();
-            else if (inputManager.isTrackpadBottomTouched())
-                grabbedObject.transform.localScale /= rescaleMultiplier;
-            else if (inputManager.isTrackpadTopTouched())
-                grabbedObject.transform.localScale *= rescaleMultiplier;
+            if (!grabbing())
+            {
+                if (inputManager.IsTriggerClicked())
+                {
+                    Debug.Log("grab");
+                    grabLastObjectInRange();
+                }
+            }
             else
-            makeGrabbedObjectStill();
+            {
+                if (!inputManager.IsTriggerClicked())
+                    releaseGrabbedObject();
+                else if (inputManager.isTrackpadBottomTouched())
+                    grabbedObject.transform.localScale /= rescaleMultiplier;
+                else if (inputManager.isTrackpadTopTouched())
+                    grabbedObject.transform.localScale *= rescaleMultiplier;
+                else
+                    makeGrabbedObjectStill();
+            }
+            updateLastFramePositionAndRotation();
         }
-        updateLastFramePositionAndRotation();
     }
 
     override
     public void enable()
     {
+        enabled = true;
         inputManager = this.GetComponent<InputManager>();
         grabbedObject = null;
         lastFramePosition = this.transform.position;
@@ -61,6 +68,7 @@ public class GrabHandler : ToolsHandler
     override
     public void disable()
     {
+        enabled = false;
         inputManager = null;
         grabbedObject = null;
     }
@@ -90,10 +98,13 @@ public class GrabHandler : ToolsHandler
     private void grabLastObjectInRange()
     {
         grabbedObject = lastObjectInRange;
-        setStandardObjectShader(grabbedObject);
-        grabbedObject.GetComponent<Rigidbody>().mass = 10000;
-        grabbedObject.GetComponent<Rigidbody>().useGravity = false;
-        grabbedObject.transform.parent = this.transform;
+        if (grabbedObject != null)
+        {
+            setStandardObjectShader(grabbedObject);
+            grabbedObject.GetComponent<Rigidbody>().mass = 10000;
+            grabbedObject.GetComponent<Rigidbody>().useGravity = false;
+            grabbedObject.transform.parent = this.transform;
+        }
     }
 
     public GameObject getObjectInRange()

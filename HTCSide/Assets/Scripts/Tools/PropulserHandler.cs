@@ -19,32 +19,40 @@ public class PropulserHandler : ToolsHandler {
 
     // Update is called once per frame
     void Update () {
-        propulsionForce = calculateSpeed();
-        
-        StartCoroutine(changeFOV());
-        if (inputManager.IsTriggerClicked())
+        if (enabled)
         {
-            player.GetComponent<Rigidbody>().AddForce(this.transform.forward * propulsionForce);
+            propulsionForce = calculateSpeed();
+
+            //StartCoroutine(changeFOV());
+            
+            if (inputManager.IsTriggerClicked())
+            {
+                player.GetComponent<Rigidbody>().AddForce(this.transform.forward * propulsionForce);
+            }
+
+            if(this.GetComponent<ControllerManager>().getSecondController().getCurrentTool().getToolName() == "Propulser")
+                player.GetComponent<Rigidbody>().AddForce(player.GetComponent<Rigidbody>().velocity * -1 * (frixion/2));
+            else
+                player.GetComponent<Rigidbody>().AddForce(player.GetComponent<Rigidbody>().velocity * -1 * frixion);
+            
+
+            endFrame();
+            //changeFOV();
         }
-
-        /*if(this.GetComponent<ControllerManager>().getSecondController().getCurrentTool() == "PROPULSER")
-            player.GetComponent<Rigidbody>().AddForce(player.GetComponent<Rigidbody>().velocity * -1 * (frixion/2));
-        else
-            player.GetComponent<Rigidbody>().AddForce(player.GetComponent<Rigidbody>().velocity * -1 * frixion);
-        */
-
-        endFrame();
-        changeFOV();
     }
 
     override
     public void enable()
     {
+        enabled = true;
+        //GameObject.Find("Player").GetComponent<Rigidbody>().mass = 10000;
     }
 
     override
     public void disable()
     {
+        enabled = false;
+        //GameObject.Find("Player").GetComponent<Rigidbody>().mass = 1;
     }
 
     private float calculateSpeed()

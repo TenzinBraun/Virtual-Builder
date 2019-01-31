@@ -20,6 +20,7 @@ public class CatalogHandler : ToolsHandler {
     private GameObject selectedObject;
     private static bool hasBeenDisplayed = false;
 
+
 	// Use this for initialization
 	void Start ()
     {
@@ -35,49 +36,54 @@ public class CatalogHandler : ToolsHandler {
 	
 	// Update is called once per frame
 	void Update () {
-		if(rayCast.Hit())
+        if (enabled)
         {
-            GameObject touchedObject = rayCast.GetHit().collider.gameObject;
-
-            if (inputManager.UserClick())
+            if (rayCast.Hit())
             {
-                if (touchedObject.CompareTag(cellTag))
-                {
-                    string modelName = touchedObject.name;
-                    importObjectAndSelectIt(modelName);
-                }
-                else if (selectedObject != null)
-                {
-                    inputManager.CanClick = false;
-                    GameObject spawned = Instantiate(selectedObject);
-                    spawned.transform.parent = null;
-                    spawned.transform.position = rayCast.GetHit().point + new Vector3(0,0.5f,0);
-                    spawned.transform.localScale *= 10;
-                    spawned.AddComponent<Rigidbody>();
+                GameObject touchedObject = rayCast.GetHit().collider.gameObject;
 
-                    if (selectedObject.transform.childCount > 0)
+                if (inputManager.UserClick())
+                {
+                    if (touchedObject.CompareTag(cellTag))
                     {
-                        for (int i = 0; i < selectedObject.transform.childCount; i++)
-                        {
-                            spawned.transform.GetChild(i).gameObject.AddComponent<MeshCollider>();
-                            spawned.transform.GetChild(i).gameObject.GetComponent<MeshCollider>().convex = true;
-
-                        }
+                        string modelName = touchedObject.name;
+                        importObjectAndSelectIt(modelName);
                     }
-                    spawned.AddComponent<MeshCollider>();
-                    spawned.GetComponent<MeshCollider>().convex = true;
-                    spawned.GetComponent<MeshCollider>().inflateMesh = true;
-                    spawned.tag = grabTag;
+                    else if (selectedObject != null)
+                    {
+                        inputManager.CanClick = false;
+                        GameObject spawned = Instantiate(selectedObject);
+                        spawned.transform.parent = null;
+                        spawned.transform.position = rayCast.GetHit().point + new Vector3(0, 0.5f, 0);
+                        spawned.transform.localScale *= 10;
+                        spawned.AddComponent<Rigidbody>();
+
+                        if (selectedObject.transform.childCount > 0)
+                        {
+                            for (int i = 0; i < selectedObject.transform.childCount; i++)
+                            {
+                                spawned.transform.GetChild(i).gameObject.AddComponent<MeshCollider>();
+                                spawned.transform.GetChild(i).gameObject.GetComponent<MeshCollider>().convex = true;
+
+                            }
+                        }
+                        spawned.AddComponent<MeshCollider>();
+                        spawned.GetComponent<MeshCollider>().convex = true;
+                        spawned.GetComponent<MeshCollider>().inflateMesh = true;
+                        spawned.tag = grabTag;
+                    }
                 }
-
             }
-
         }
 	}
 
     override
     public void enable()
     {
+        enabled = true;
+        this.GetComponent<LineRenderer>().enabled = true;
+        this.GetComponent<LaserHandler>().enabled = true;
+
         catalog = GameObject.Find("Catalog");
         modelsData = new List<ModelData>();
         catalog.GetComponent<Rigidbody>().useGravity = true;
@@ -97,13 +103,23 @@ public class CatalogHandler : ToolsHandler {
     override
     public void disable()
     {
+        enabled = false;
         Destroy(selectedObject);
-        catalog.GetComponent<Rigidbody>().useGravity = false;
+
+        if(catalog != null)
+        {
+            catalog.GetComponent<Rigidbody>().useGravity = false;
+            catalog.transform.position = new Vector3(0, 0, 0);
+        }
+
         modelsData = null;
         rayCast = null;
         inputManager = null;
         modelImporter = null;
-        catalog.transform.position = new Vector3(0, 0, 0);
+
+
+        this.GetComponent<LineRenderer>().enabled = false;
+        this.GetComponent<LaserHandler>().enabled = false;
     }
 
     private void importObjectAndSelectIt(string modelName)

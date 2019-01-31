@@ -18,21 +18,30 @@ public class TeleporterHandler : ToolsHandler {
 
     void Update()
     {
-        if (inputManager.IsTriggerClicked())
+        if (enabled)
         {
-            Teleport(rayCast.GetHit());
-            inputManager.CanClick = false;
+            if (inputManager.IsTriggerClicked())
+            {
+                Teleport(rayCast.GetHit());
+                inputManager.CanClick = false;
+            }
         }
     }
 
     override
     public void enable()
     {
+        enabled = true;
+        this.GetComponent<LineRenderer>().enabled = true;
+        this.GetComponent<LaserHandler>().enabled = true;
     }
 
     override
     public void disable()
     {
+        enabled = false;
+        this.GetComponent<LineRenderer>().enabled = false;
+        this.GetComponent<LaserHandler>().enabled = false;
     }
 
     public void Teleport(RaycastHit hit)

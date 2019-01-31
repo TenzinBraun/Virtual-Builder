@@ -8,7 +8,10 @@ public abstract class ToolsHandler : MonoBehaviour
 
     protected string toolName;
     protected GameObject toolIcon;
-    
+
+
+    protected bool enabled;
+
     public abstract void enable();
     public abstract void disable();
 
