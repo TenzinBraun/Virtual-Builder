@@ -4561,8 +4561,16 @@ MonoBehaviour:
   VignetteOuterValueDistance: 1
   VignetteMode: 1
   VignetteCenter: {x: 0.5, y: 0.5}
-  VignetteInnerColor: {r: 0, g: 0, b: 0, a: 0}
-  VignetteOuterColor: {r: 0, g: 0, b: 0, a: 1}
+  VignetteInnerColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  VignetteOuterColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 1
   VignetteInnerSaturation: 1
   VignetteOuterSaturation: 0
   VignetteDebugEnabled: 0

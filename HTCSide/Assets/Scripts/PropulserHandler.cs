@@ -32,6 +32,7 @@ public class PropulserHandler : MonoBehaviour {
             player.GetComponent<Rigidbody>().AddForce(player.GetComponent<Rigidbody>().velocity * -1 * frixion);
 
         endFrame();
+        changeFOV();
     }
 
     private float calculateSpeed()
@@ -54,7 +55,7 @@ public class PropulserHandler : MonoBehaviour {
     IEnumerator changeFOV()
     {
         yield return new WaitForEndOfFrame();
-        GameObject.Find("Main Camera").GetComponent<Camera>().fieldOfView += FOVMultiplyer * player.GetComponent<Rigidbody>().velocity.magnitude;
-        Debug.Log(GameObject.Find("Main Camera").GetComponent<Camera>().fieldOfView);
+        GameObject.Find("RightCamera").GetComponent<Camera>().fieldOfView += FOVMultiplyer * player.GetComponent<Rigidbody>().velocity.magnitude;
+        Debug.Log(GameObject.Find("LeftCamera").GetComponent<Camera>().fieldOfView);
     }
 }

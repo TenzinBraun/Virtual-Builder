@@ -13,7 +13,7 @@ public class CatalogPanelHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        this.transform.LookAt(GameObject.Find("Main Camera").transform);
+        this.transform.LookAt(GameObject.Find("MainCamera").transform);
         this.transform.Rotate(0, 180, 0);
         this.transform.eulerAngles = new Vector3(0, this.transform.eulerAngles.y, 0);
 	}
