@@ -10,7 +10,7 @@ public partial class ControllerManager : MonoBehaviour {
     private ControllerManager secondController;
     private RayCast rayCast;
 
-    public List<String> toolNames;
+    public List<string> toolNames;
     public string defaultToolName;
 
     private List<ToolsHandler> tools;
@@ -19,6 +19,8 @@ public partial class ControllerManager : MonoBehaviour {
 
     private ToolsHandler currentTool;
     private GameObject currentToolIcon;
+
+    private string lastSelectedToolIcon;
 
     bool choosingTool = false;
     bool vrMode;
@@ -48,11 +50,29 @@ public partial class ControllerManager : MonoBehaviour {
             displayMenu();
             choosingTool = true;
         }
+
+        //apply the shader to the selected tool icon
+        if(Grab() && choosingTool)
+        {
+            string selectedToolIcon = inputManager.getSelectedTool(vrMode, this.name);
+            if (selectedToolIcon != null)
+            {
+                Debug.Log(selectedToolIcon);
+                lastSelectedToolIcon = selectedToolIcon;
+                GameObject.Find(selectedToolIcon + "Icon(Clone)").GetComponent<Renderer>().material.shader = Shader.Find("VR/SpatialMapping/Wireframe");
+            }
+            else if(lastSelectedToolIcon != null)
+            {
+                GameObject.Find(lastSelectedToolIcon + "Icon(Clone)").GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+                lastSelectedToolIcon = null;
+            }
+        }
             
         if (!Grab() && choosingTool)
         {
             if (getSelectedTool() != null)
             {
+                GameObject.Find(lastSelectedToolIcon + "Icon(Clone)").GetComponent<Renderer>().material.shader = Shader.Find("Standard");
                 setCurrentTool(getSelectedTool());
             }
 
@@ -79,6 +99,7 @@ public partial class ControllerManager : MonoBehaviour {
     {
         for (int i = 0; i < toolNames.Count; i++)
         {
+            
             string toolHandlerName = toolNames[i] + "Handler";
             ToolsHandler toolHandler = this.GetComponent(Type.GetType(toolHandlerName)) as ToolsHandler;
             tools.Add(toolHandler);
@@ -89,6 +110,7 @@ public partial class ControllerManager : MonoBehaviour {
 
         for(int i=0 ; i < tools.Count ; i++)
         {
+            Debug.Log(tools[3].getToolIcon().transform.name);
             tools[i].getToolIcon().transform.parent = menu.transform;
         }
 
@@ -99,12 +121,20 @@ public partial class ControllerManager : MonoBehaviour {
     {
         for (int i = 0; i < tools.Count; i++)
         {
-            float offset = (float)i - (((float)tools.Count - 1f) / 2f);
-            tools[i].getToolIcon().transform.position = new Vector3(0, 0, offset);
+            double angleRangeToPlaceIconsIn = Math.PI; //in radians
+            double angleLeft = ((Math.PI - angleRangeToPlaceIconsIn) / 2);
+            float circleRadius = 2f;
+            Vector3 controllerOffset = new Vector3(0, 0, 1.5f);
+
+            tools[i].getToolIcon().transform.position = new Vector3(
+                circleRadius * (float)(Math.Cos(angleLeft + ((i * angleRangeToPlaceIconsIn) / (tools.Count - 1)))),
+                tools[i].getToolIcon().transform.position.y,
+                circleRadius * (float)(Math.Sin(angleLeft + ((i * angleRangeToPlaceIconsIn) / (tools.Count - 1))))
+                ) - controllerOffset;
         }
     }
 
-    private void hideMenu()
+    public void hideMenu()
     {
         menu.SetActive(false);
     }
@@ -161,7 +191,7 @@ public partial class ControllerManager : MonoBehaviour {
         }
     }
 
-    private void disableAllTools()
+    public void disableAllTools()
     {
         for(int i = 0; i < tools.Count; i++)
         {
@@ -226,7 +256,6 @@ public partial class ControllerManager : MonoBehaviour {
             destroyCurrentToolIcon();
         }
     }
-
 
     private void enableCurrentTool ()
     {

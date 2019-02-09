@@ -10,6 +10,8 @@ public class PropulserHandler : ToolsHandler {
     public float propulsionForce = 10f;
     public float frixion = 1f;
     public float FOVMultiplyer = 5f;
+
+
 	// Use this for initialization
 	void Start()
     {
@@ -78,4 +80,6 @@ public class PropulserHandler : ToolsHandler {
         GameObject.Find("RightCamera").GetComponent<Camera>().fieldOfView += FOVMultiplyer * player.GetComponent<Rigidbody>().velocity.magnitude;
         Debug.Log(GameObject.Find("LeftCamera").GetComponent<Camera>().fieldOfView);
     }
+
+
 }

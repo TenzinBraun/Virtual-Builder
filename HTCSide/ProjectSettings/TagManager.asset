@@ -9,6 +9,7 @@ TagManager:
   - Floor
   - ToolIcon
   - CatalogGrab
+  - Maze
   layers:
   - Default
   - TransparentFX

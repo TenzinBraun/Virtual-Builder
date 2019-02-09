@@ -44,6 +44,7 @@ public class CatalogHandler : ToolsHandler {
 
                 if (inputManager.UserClick())
                 {
+                    inputManager.CanClick = false;
                     if (touchedObject.CompareTag(cellTag))
                     {
                         string modelName = touchedObject.name;
@@ -51,7 +52,6 @@ public class CatalogHandler : ToolsHandler {
                     }
                     else if (selectedObject != null)
                     {
-                        inputManager.CanClick = false;
                         GameObject spawned = Instantiate(selectedObject);
                         spawned.transform.parent = null;
                         spawned.transform.position = rayCast.GetHit().point + new Vector3(0, 0.5f, 0);
@@ -74,6 +74,7 @@ public class CatalogHandler : ToolsHandler {
                     }
                 }
             }
+            updateMenuRotation();
         }
 	}
 
@@ -183,5 +184,11 @@ public class CatalogHandler : ToolsHandler {
     public GameObject getCatalog()
     {
         return catalog;
+    }
+
+    private void updateMenuRotation()
+    {
+        GameObject.Find("Catalog").transform.LookAt(GameObject.Find("Main Camera").transform);
+        GameObject.Find("Catalog").transform.eulerAngles = new Vector3(270, GameObject.Find("CatalogCanvas").transform.eulerAngles.y + 180, 0);
     }
 }
